@@ -112,6 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,10 +160,18 @@
     <ClInclude Include="Sources\GUI\imgui\imconfig.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui_internal.h" />
+    <ClInclude Include="Sources\light.hpp" />
+    <ClInclude Include="Sources\material.hpp" />
     <ClInclude Include="Sources\mesh.hpp" />
     <ClInclude Include="Sources\model.hpp" />
     <ClInclude Include="Sources\viewmodel.hpp" />
     <ClInclude Include="Sources\shader.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\gouraud.frag" />
+    <None Include="Shaders\gouraud.vert" />
+    <None Include="Shaders\phong.frag" />
+    <None Include="Shaders\phong.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

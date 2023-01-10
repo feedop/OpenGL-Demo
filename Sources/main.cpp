@@ -17,7 +17,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
-#include "shader.hpp"
 #include "viewmodel.hpp"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
@@ -137,8 +136,8 @@ int main(int, char**)
 
 		ImGui::Text("Shader mode");
 
-		ImGui::RadioButton("solid color", &viewModel.selectedShader, 0); ImGui::SameLine();
-		ImGui::RadioButton("Gourard interpolation", &viewModel.selectedShader, 1); ImGui::SameLine();
+		ImGui::RadioButton("Solid color", &viewModel.selectedShader, 0); ImGui::SameLine();
+		ImGui::RadioButton("Gouraud interpolation", &viewModel.selectedShader, 1); ImGui::SameLine();
 		ImGui::RadioButton("Phong interpolation", &viewModel.selectedShader, 2);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

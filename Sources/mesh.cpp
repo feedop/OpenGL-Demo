@@ -2,10 +2,11 @@
 
 #include <glad/glad.h>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material material)
 {
     this->vertices = vertices;
     this->indices = indices;
+    this->material = material;
 
     setupMesh();
 }
@@ -35,13 +36,10 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader& shader)
+void Mesh::Draw(const Shader* shader)
 {
-    unsigned int diffuseNr = 1;
-    unsigned int specularNr = 1;
-
-    shader.setVector("u_objectColor", m_objectColor);
-    shader.setMatrix("u_model", m_model);
+    shader->setMatrix("u_model", m_model);
+    shader->setMaterial(material);
 
     // draw mesh
     glBindVertexArray(VAO);

@@ -6,6 +6,7 @@
 #include <glm/mat4x4.hpp>
 
 #include "shader.hpp"
+#include "material.hpp"
 
 struct Vertex {
     glm::vec3 Position;
@@ -20,11 +21,11 @@ public:
     std::vector<unsigned int> indices;
 
     glm::mat4 m_model = glm::mat4(1.0f);
-    glm::vec3 m_objectColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
-    void Draw(Shader& shader);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material material = Material::whitePlastic());
+    void Draw(const Shader* shader);
 private:
+    Material material;
     //  render data
     unsigned int VAO, VBO, EBO;
 
