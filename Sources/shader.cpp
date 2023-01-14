@@ -96,6 +96,12 @@ void Shader::setFloat(const char* name, float value) const
     glUniform1f(location, value);
 }
 
+void Shader::setInt(const char* name, int value) const
+{
+    int location = glGetUniformLocation(ID, name);
+    glUniform1i(location, value);
+}
+
 void Shader::setVector(const char* name, glm::vec3 vector) const
 {
     int location = glGetUniformLocation(ID, name);
@@ -113,19 +119,9 @@ void SolidColorShader::setLighting(std::vector<DirLight>& dirLights, std::vector
     setVector("u_lightColor", dirLights[0].diffuse);
 }
 
-void SolidColorShader::setMaterial(const Material& material) const
-{
-    setVector("u_objectColor", material.diffuse);
-}
-
 void GouraudShader::setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const
 {
     setVector("u_lightColor", dirLights[0].diffuse);
-}
-
-void GouraudShader::setMaterial(const Material& material) const
-{
-    setVector("u_objectColor", material.diffuse);
 }
 
 void PhongShader::setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const
@@ -165,13 +161,9 @@ void PhongShader::setLighting(std::vector<DirLight>& dirLights, std::vector<Poin
         setVector(std::format("spotLights[{}].diffuse", i).c_str(), spotLights[i].diffuse);
         setVector(std::format("spotLights[{}].specular", i).c_str(), spotLights[i].specular);
     }
-}
 
-void PhongShader::setMaterial(const Material& material) const
-{
-    setVector("material.ambient", material.ambient);
-    setVector("material.diffuse", material.diffuse);
-    setVector("material.specular", material.specular);
-    setFloat("material.shininess", material.shininess);
-    
+    // Sizes
+    setInt("dirLightCount", dirLights.size());
+    setInt("pointLightCount", pointLights.size());
+    setInt("spotLightCount", spotLights.size());
 }

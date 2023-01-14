@@ -6,12 +6,24 @@
 #include <glm/mat4x4.hpp>
 
 #include "shader.hpp"
-#include "material.hpp"
 
 struct Vertex {
+    // position
     glm::vec3 Position;
+    // normal
     glm::vec3 Normal;
+    // texCoords
     glm::vec2 TexCoords;
+    //// tangent
+    //glm::vec3 Tangent;
+    //// bitangent
+    //glm::vec3 Bitangent;
+};
+
+struct Texture {
+    unsigned int id;
+    std::string type;
+    std::string path;
 };
 
 class Mesh {
@@ -19,13 +31,12 @@ public:
     // mesh data
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
+    std::vector<Texture> textures;
 
-    glm::mat4 m_model = glm::mat4(1.0f);
-
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material material = Material::whitePlastic());
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
     void Draw(const Shader* shader);
 private:
-    Material material;
+    float shininess = 0.5f;
     //  render data
     unsigned int VAO, VBO, EBO;
 

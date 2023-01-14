@@ -161,9 +161,9 @@
     <ClInclude Include="Sources\GUI\imgui\imgui.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui_internal.h" />
     <ClInclude Include="Sources\light.hpp" />
-    <ClInclude Include="Sources\material.hpp" />
     <ClInclude Include="Sources\mesh.hpp" />
     <ClInclude Include="Sources\model.hpp" />
+    <ClInclude Include="Sources\stb_image.h" />
     <ClInclude Include="Sources\viewmodel.hpp" />
     <ClInclude Include="Sources\shader.hpp" />
   </ItemGroup>

@@ -98,7 +98,7 @@
     <ClInclude Include="Sources\light.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\material.hpp">
+    <ClInclude Include="Sources\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
