@@ -13,17 +13,17 @@ ViewModel::ViewModel()
 
 	// Create shaders
 	shaders = {
-		new SolidColorShader,
-		new GouraudShader,
-		new PhongShader
+		std::shared_ptr<Shader>(new SolidColorShader),
+		std::shared_ptr<Shader>(new GouraudShader),
+		std::shared_ptr<Shader>(new PhongShader)
 	};
 
 	// Create cameras
 	cameras =
 	{
-		new MovableCamera(glm::vec3(3.0f, 1.0f, 3.0f), glm::vec3(0, 0, 0)),
-		new FollowingCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0)),
-		new ThirdPersonCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0))
+		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(3.0f, 1.0f, 3.0f), glm::vec3(0, 0, 0))),
+		std::shared_ptr<Camera>(new FollowingCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0))),
+		std::shared_ptr<Camera>(new ThirdPersonCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0)))
 	};
 
 	// Projection matrix
@@ -31,13 +31,6 @@ ViewModel::ViewModel()
 
 	// Create light sources
 	setUpLightSources();
-}
-
-ViewModel::~ViewModel()
-{
-	delete shaders[0];
-	delete shaders[1];
-	delete shaders[2];
 }
 
 void ViewModel::Draw()

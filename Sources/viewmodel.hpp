@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
@@ -22,15 +23,14 @@ public:
     int selectedCamera = 0;
 
     ViewModel();
-    ~ViewModel();
     void Draw();
     void updateCamera(glm::vec3 position, glm::vec3 front);
     void rotateCameraSideways(float angle);
 private:
     // model data
     std::vector<Model> models;
-    std::vector<Shader*> shaders;
-    std::vector<Camera*> cameras;
+    std::vector<std::shared_ptr<Shader>> shaders;
+    std::vector<std::shared_ptr<Camera>> cameras;
 
     std::vector<DirLight> dirLights;
     std::vector<PointLight> pointLights;

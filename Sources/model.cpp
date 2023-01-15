@@ -16,7 +16,7 @@ Model::Model(const char* path)
     loadModel(path);
 }
 
-void Model::Draw(const Shader* shader)
+void Model::Draw(const std::shared_ptr<Shader> shader)
 {
     shader->setMatrix("u_model", m_model);
     shader->setFloat("material.shininess", 32.0);
@@ -137,7 +137,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
     //textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
     // return a mesh object created from the extracted mesh data
-    return Mesh(vertices, indices, textures);
+    return Mesh(std::move(vertices), std::move(indices), std::move(textures));
 }
 
 std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
@@ -182,7 +182,7 @@ unsigned int Model::textureFromFile(const char* path, const std::string& directo
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
     if (data)
     {
-        GLenum format;
+        GLenum format = 0;
         if (nrComponents == 1)
             format = GL_RED;
         else if (nrComponents == 3)

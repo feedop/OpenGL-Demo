@@ -2,13 +2,11 @@
 
 #include <glad/glad.h>
 #include <format>
+#include <memory>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures) :
+    vertices(vertices), indices(indices), textures(textures)
 {
-    this->vertices = vertices;
-    this->indices = indices;
-    this->textures = textures;
-
     setupMesh();
 }
 
@@ -46,7 +44,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(const Shader* shader)
+void Mesh::Draw(const std::shared_ptr<Shader> shader)
 {
     unsigned int diffuseNr = 0;
     unsigned int specularNr = 0;

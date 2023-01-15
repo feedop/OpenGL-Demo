@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <string>
 #include <assimp/scene.h>
 
@@ -15,7 +16,7 @@ public:
 
     Model(const char* path);
     
-    void Draw(const Shader* shader);
+    void Draw(const std::shared_ptr<Shader> shader);
 private:    
     std::vector<Texture> textures_loaded;
     std::string directory;
