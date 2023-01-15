@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\..\CUDA\Boids\src\glad.c" />
+    <ClCompile Include="Sources\camera.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_glfw.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Sources\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\camera.hpp" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3_loader.h" />

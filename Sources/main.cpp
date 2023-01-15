@@ -26,6 +26,8 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
+void processInput(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
@@ -108,11 +110,13 @@ int main(int, char**)
     
     glEnable(GL_DEPTH_TEST);
 
-    // Create shader programs
-    std::vector<Shader>shaders;
-
     // Create a model manager
     ViewModel viewModel;
+
+    // Set up input processing
+    glfwSetWindowUserPointer(window, &viewModel);
+    glfwSetKeyCallback(window, processInput);
+    
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -142,6 +146,12 @@ int main(int, char**)
 		ImGui::RadioButton("Solid color", &viewModel.selectedShader, 0); ImGui::SameLine();
 		ImGui::RadioButton("Gouraud interpolation", &viewModel.selectedShader, 1); ImGui::SameLine();
 		ImGui::RadioButton("Phong interpolation", &viewModel.selectedShader, 2);
+
+        ImGui::Text("Camera");
+
+        ImGui::RadioButton("Movable camera", &viewModel.selectedCamera, 0); ImGui::SameLine();
+        ImGui::RadioButton("Following camera", &viewModel.selectedCamera, 1); ImGui::SameLine();
+        ImGui::RadioButton("Third person camera", &viewModel.selectedCamera, 2);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
@@ -181,4 +191,39 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
+}
+
+void processInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    const float speed = 0.2f;
+    static float angle = 0;
+    ViewModel* viewModel = static_cast<ViewModel*>(glfwGetWindowUserPointer(window));
+    if (action == GLFW_PRESS || action == GLFW_REPEAT)
+    {
+        if (viewModel->selectedCamera == 0)
+        {
+            // Move the camera
+            switch (key)
+            {
+            /*case GLFW_KEY_W:
+                pitch += speed;
+                viewModel->rotateCamera(yaw, pitch);
+                break;
+            case GLFW_KEY_S:
+                pitch -= speed;
+                viewModel->rotateCamera(yaw, pitch);
+                break;*/
+            case GLFW_KEY_A:
+                angle += speed;
+                viewModel->rotateCameraSideways(angle);
+                break;
+            case GLFW_KEY_D:
+                angle -= speed;
+                viewModel->rotateCameraSideways(angle);
+                break;
+            }
+        }
+    }
+    
+    
 }

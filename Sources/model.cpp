@@ -19,10 +19,10 @@ Model::Model(const char* path)
 void Model::Draw(const Shader* shader)
 {
     shader->setMatrix("u_model", m_model);
-    shader->setFloat("shininess", 31);
+    shader->setFloat("material.shininess", 32.0);
 
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+	for (Mesh mesh : meshes)
+		mesh.Draw(shader);
 }
 
 void Model::loadModel(std::string path)

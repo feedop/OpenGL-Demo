@@ -7,6 +7,7 @@
 #include "shader.hpp"
 #include "model.hpp"
 #include "light.hpp"
+#include "camera.hpp"
 
 #define NR_DIR_LIGHTS 1
 #define NR_POINT_LIGHTS 1
@@ -23,10 +24,13 @@ public:
     ViewModel();
     ~ViewModel();
     void Draw();
+    void updateCamera(glm::vec3 position, glm::vec3 front);
+    void rotateCameraSideways(float angle);
 private:
     // model data
     std::vector<Model> models;
-    std::vector<Shader*>shaders;
+    std::vector<Shader*> shaders;
+    std::vector<Camera*> cameras;
 
     std::vector<DirLight> dirLights;
     std::vector<PointLight> pointLights;
@@ -37,4 +41,5 @@ private:
         glm::vec3(0.0f, 1.0f, 0.0f));*/
     mat4 m_projection = mat4(1.0f);
 
+    void setUpLightSources();
 };
