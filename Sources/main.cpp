@@ -18,6 +18,7 @@
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
 #include "viewmodel.hpp"
+#include "textureloading.hpp"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -105,10 +106,15 @@ int main(int, char**)
 
     // Our state
     bool show_demo_window = false;
-    //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    //ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
     
+    // Additional OpenGL setup
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    // Set up texture loading
+    stbi::flipVertically();
 
     // Create a model manager
     ViewModel viewModel;
@@ -164,7 +170,10 @@ int main(int, char**)
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        viewModel.Draw();
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+
+        viewModel.draw();
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     	

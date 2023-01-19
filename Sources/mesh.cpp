@@ -44,7 +44,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(const std::shared_ptr<Shader> shader)
+void Mesh::draw(const std::shared_ptr<Shader> shader)
 {
     unsigned int diffuseNr = 0;
     unsigned int specularNr = 0;

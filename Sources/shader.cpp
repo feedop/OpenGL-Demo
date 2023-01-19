@@ -114,17 +114,17 @@ void Shader::setMatrix(const char* name, glm::mat4 matrix) const
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void SolidColorShader::setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const
+void SolidColorShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
-    setVector("u_lightColor", dirLights[0].diffuse);
+    
 }
 
-void GouraudShader::setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const
+void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
-    setVector("u_lightColor", dirLights[0].diffuse);
+    
 }
 
-void PhongShader::setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const
+void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
     // Directional lights
     for (int i = 0; i < dirLights.size(); i++)
@@ -166,4 +166,9 @@ void PhongShader::setLighting(std::vector<DirLight>& dirLights, std::vector<Poin
     setInt("dirLightCount", dirLights.size());
     setInt("pointLightCount", pointLights.size());
     setInt("spotLightCount", spotLights.size());
+}
+
+void SkyboxShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
+{
+
 }

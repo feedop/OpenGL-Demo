@@ -7,6 +7,7 @@
 
 #include "shader.hpp"
 #include "mesh.hpp"
+#include "textureloading.hpp"
 
 class Model
 {
@@ -16,7 +17,7 @@ public:
 
     Model(const char* path);
     
-    void Draw(const std::shared_ptr<Shader> shader);
+    void draw(const std::shared_ptr<Shader> shader);
 private:    
     std::vector<Texture> textures_loaded;
     std::string directory;
@@ -25,5 +26,5 @@ private:
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
-    unsigned int textureFromFile(const char* path, const std::string& directory);
+    
 };

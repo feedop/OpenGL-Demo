@@ -1,5 +1,7 @@
 #include "viewmodel.hpp"
 
+#include <glad/glad.h>
+
 ViewModel::ViewModel()
 {
 	// Create models
@@ -7,9 +9,13 @@ ViewModel::ViewModel()
 	{
 		//"Models/FullDonut.obj"
 		//"Models/Sphere.obj",
-		"Models/backpack/backpack.obj"
+		//"Models/backpack/backpack.obj"
 		//"Models/x-wing/x-wing-flyingv1.obj"
+		"Models/imperial-star-destroyer/Star_destroyer.obj"
 	};
+
+	// Set the models' positions
+	setUpModelPositions();
 
 	// Create shaders
 	shaders = {
@@ -18,12 +24,14 @@ ViewModel::ViewModel()
 		std::shared_ptr<Shader>(new PhongShader)
 	};
 
+	skyboxShader = std::shared_ptr<Shader>(new SkyboxShader);
+
 	// Create cameras
 	cameras =
 	{
-		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(3.0f, 1.0f, 3.0f), glm::vec3(0, 0, 0))),
-		std::shared_ptr<Camera>(new FollowingCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0))),
-		std::shared_ptr<Camera>(new ThirdPersonCamera(glm::vec3(3.0f, 0, 3.0f), glm::vec3(0, 0, 0)))
+		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0))),
+		std::shared_ptr<Camera>(new FollowingCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0))),
+		std::shared_ptr<Camera>(new ThirdPersonCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0)))
 	};
 
 	// Projection matrix
@@ -33,7 +41,7 @@ ViewModel::ViewModel()
 	setUpLightSources();
 }
 
-void ViewModel::Draw()
+void ViewModel::draw()
 {
 	// Get updated view matrix
 	m_view = cameras[selectedCamera]->getLookAt();
@@ -45,9 +53,20 @@ void ViewModel::Draw()
 	shaders[selectedShader]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
 	shaders[selectedShader]->setLighting(dirLights, pointLights, spotLights);
 
-	// Draw every models
+	// Draw every model
 	for (Model model : models)
-		model.Draw(shaders[selectedShader]);
+		model.draw(shaders[selectedShader]);
+
+	// Draw the background
+	glDepthFunc(GL_LEQUAL);
+	skyboxShader->use();
+	glm::mat4 noTranslationView = glm::mat4(glm::mat3(m_view));
+	skyboxShader->setMatrix("u_view", noTranslationView);
+	skyboxShader->setMatrix("u_projection", m_projection);
+
+	skybox.draw(skyboxShader);
+
+	glDepthFunc(GL_LESS);
 }
 
 void ViewModel::updateCamera(glm::vec3 position, glm::vec3 front)
@@ -155,4 +174,9 @@ void ViewModel::setUpLightSources()
 	//	1.8f
 	//};
 	//spotLights.push_back(spotLight1);
+}
+
+void ViewModel::setUpModelPositions()
+{
+	models[0].m_model = glm::scale(models[0].m_model, glm::vec3(0.2f, 0.2f, 0.2f));
 }

@@ -9,10 +9,7 @@
 #include "model.hpp"
 #include "light.hpp"
 #include "camera.hpp"
-
-#define NR_DIR_LIGHTS 1
-#define NR_POINT_LIGHTS 1
-#define NR_SPOT_LIGHTS 2
+#include "skybox.hpp"
 
 using namespace glm;
 
@@ -23,14 +20,17 @@ public:
     int selectedCamera = 0;
 
     ViewModel();
-    void Draw();
-    void updateCamera(glm::vec3 position, glm::vec3 front);
+    void draw();
+    void updateCamera(vec3 position, vec3 front);
     void rotateCameraSideways(float angle);
 private:
     // model data
     std::vector<Model> models;
     std::vector<std::shared_ptr<Shader>> shaders;
     std::vector<std::shared_ptr<Camera>> cameras;
+
+    std::shared_ptr<Shader> skyboxShader;
+    Skybox skybox{};
 
     std::vector<DirLight> dirLights;
     std::vector<PointLight> pointLights;
@@ -42,4 +42,5 @@ private:
     mat4 m_projection = mat4(1.0f);
 
     void setUpLightSources();
+    void setUpModelPositions();
 };

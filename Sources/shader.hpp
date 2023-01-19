@@ -20,7 +20,7 @@ public:
     virtual void setInt(const char* name, int value) const;
     virtual void setVector(const char* name, glm::vec3 vector) const;
     virtual void setMatrix(const char* name, glm::mat4 matrix) const;
-    virtual void setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const = 0;
+    virtual void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const = 0;
 protected:
     // constructor reads and builds the shader
     Shader(const char* vertexPath, const char* fragmentPath);
@@ -30,19 +30,26 @@ class SolidColorShader : public Shader
 {
 public:
     SolidColorShader() : Shader("Shaders\\solidcolor.vert", "Shaders\\solidcolor.frag") {}
-    void setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const override;
+    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class GouraudShader : public Shader
 {
 public:
     GouraudShader() : Shader("Shaders\\gouraud.vert", "Shaders\\gouraud.frag") {}
-    void setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const override;
+    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class PhongShader : public Shader
 {
 public:
     PhongShader() : Shader("Shaders\\phong.vert", "Shaders\\phong.frag") {}
-    void setLighting(std::vector<DirLight>& dirLights, std::vector<PointLight>& pointLights, std::vector<SpotLight>& spotLights) const override;
+    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
+};
+
+class SkyboxShader : public Shader
+{
+public:
+    SkyboxShader() : Shader("Shaders\\skybox.vert", "Shaders\\skybox.frag") {}
+    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
