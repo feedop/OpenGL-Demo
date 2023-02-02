@@ -121,7 +121,46 @@ void SolidColorShader::setLighting(const std::vector<DirLight>& dirLights, const
 
 void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
-    
+    // Directional lights
+    for (int i = 0; i < dirLights.size(); i++)
+    {
+        setVector(std::format("dirLights[{}].direction", i).c_str(), dirLights[i].direction);
+        setVector(std::format("dirLights[{}].ambient", i).c_str(), dirLights[i].ambient);
+        setVector(std::format("dirLights[{}].diffuse", i).c_str(), dirLights[i].diffuse);
+        setVector(std::format("dirLights[{}].specular", i).c_str(), dirLights[i].specular);
+    }
+
+    // Point lights
+    for (int i = 0; i < pointLights.size(); i++)
+    {
+        setVector(std::format("pointLights[{}].position", i).c_str(), pointLights[i].position);
+        setFloat(std::format("pointLights[{}].constant", i).c_str(), pointLights[i].constant);
+        setFloat(std::format("pointLights[{}].linear", i).c_str(), pointLights[i].linear);
+        setFloat(std::format("pointLights[{}].quadratic", i).c_str(), pointLights[i].quadratic);
+        setVector(std::format("pointLights[{}].ambient", i).c_str(), pointLights[i].ambient);
+        setVector(std::format("pointLights[{}].diffuse", i).c_str(), pointLights[i].diffuse);
+        setVector(std::format("pointLights[{}].specular", i).c_str(), pointLights[i].specular);
+    }
+
+    // Spotlights
+    for (int i = 0; i < spotLights.size(); i++)
+    {
+        setVector(std::format("spotLights[{}].position", i).c_str(), spotLights[i].position);
+        setVector(std::format("spotLights[{}].direction", i).c_str(), spotLights[i].direction);
+        setFloat(std::format("spotLights[{}].cutOff", i).c_str(), spotLights[i].cutOff);
+        setFloat(std::format("spotLights[{}].outerCutOff", i).c_str(), spotLights[i].outerCutOff);
+        setFloat(std::format("spotLights[{}].constant", i).c_str(), spotLights[i].constant);
+        setFloat(std::format("spotLights[{}].linear", i).c_str(), spotLights[i].linear);
+        setFloat(std::format("spotLights[{}].quadratic", i).c_str(), spotLights[i].quadratic);
+        setVector(std::format("spotLights[{}].ambient", i).c_str(), spotLights[i].ambient);
+        setVector(std::format("spotLights[{}].diffuse", i).c_str(), spotLights[i].diffuse);
+        setVector(std::format("spotLights[{}].specular", i).c_str(), spotLights[i].specular);
+    }
+
+    // Sizes
+    setInt("dirLightCount", dirLights.size());
+    setInt("pointLightCount", pointLights.size());
+    setInt("spotLightCount", spotLights.size());
 }
 
 void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const

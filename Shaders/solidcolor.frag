@@ -1,10 +1,18 @@
-#version 330 core
+#version 410 core
+
+in vec2 TexCoords;
+
 out vec4 FragColor;
 
-uniform vec3 u_objectColor;
-uniform vec3 u_lightColor;
+struct Material {
+    sampler2D diffuse0;
+    sampler2D specular0;
+    float shininess;
+};
+
+uniform Material material;
 
 void main()
 {
-    FragColor = vec4(u_lightColor *u_objectColor, 1.0);
+    FragColor = texture(material.diffuse0, TexCoords);
 }
