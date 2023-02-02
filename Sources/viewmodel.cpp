@@ -2,21 +2,8 @@
 
 #include <glad/glad.h>
 
-ViewModel::ViewModel()
+ViewModel::ViewModel(Repository* repository) : repository(repository)
 {
-	// Create models
-	models =
-	{
-		//"Models/FullDonut.obj"
-		//"Models/Sphere.obj",
-		//"Models/backpack/backpack.obj"
-		//"Models/x-wing/x-wing-flyingv1.obj"
-		"Models/imperial-star-destroyer/Star_destroyer.obj"
-	};
-
-	// Set the models' positions
-	setUpModelPositions();
-
 	// Create shaders
 	shaders = {
 		std::shared_ptr<Shader>(new SolidColorShader),
@@ -29,16 +16,13 @@ ViewModel::ViewModel()
 	// Create cameras
 	cameras =
 	{
-		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0))),
+		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1))),
 		std::shared_ptr<Camera>(new FollowingCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0))),
 		std::shared_ptr<Camera>(new ThirdPersonCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0)))
 	};
 
 	// Projection matrix
 	m_projection = glm::perspective<float>(90.0f, 1, 0.1f, 20.0f);
-
-	// Create light sources
-	setUpLightSources();
 }
 
 void ViewModel::draw()
@@ -51,10 +35,15 @@ void ViewModel::draw()
 	shaders[selectedShader]->setMatrix("u_view", m_view);
 	shaders[selectedShader]->setMatrix("u_projection", m_projection);
 	shaders[selectedShader]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
-	shaders[selectedShader]->setLighting(dirLights, pointLights, spotLights);
+	shaders[selectedShader]->setLighting(repository->dirLights, repository->pointLights, repository->spotLights);
 
 	// Draw every model
-	for (Model model : models)
+	repository->playerModel.draw(shaders[selectedShader]);
+
+	for (Model model : repository->aiModels)
+		model.draw(shaders[selectedShader]);
+
+	for (Model model : repository->staticModels)
 		model.draw(shaders[selectedShader]);
 
 	// Draw the background
@@ -97,86 +86,4 @@ void ViewModel::rotateCameraSideways(float angle)
 	float camZ = radius * glm::cos(angle);
 
 	cameras[selectedCamera]->updateCamera(glm::vec3(camX, cameraPosition.y, camZ), glm::vec3(0, 0, 0));
-}
-
-void ViewModel::setUpLightSources()
-{
-	// Directional light sources
-	//DirLight dirLight0
-	//{
-	//	{
-	//		vec3(0, 0.1f, 0), vec3(0.2f, 0.6f, 0.2f), vec3(0.2f ,0.6f, 0.2f)
-	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-	//	},
-	//	vec3(0, 0, -2.0f)
-	//};
-	//dirLights.push_back(dirLight0);
-
-	DirLight dirLight1
-	{
-		{
-			//vec3(0.1f, 0, 0), vec3(0, 0, 0), vec3(0.2f ,0, 0)
-			vec3(0.2f, 0.2f, 0.2f), vec3(0.7f, 0.7f, 0.7f), vec3(0.7f, 0.7f, 0.7f)
-		},
-		vec3(0, 0, -1.0f)
-	};
-	dirLights.push_back(dirLight1);
-
-	// Point light sources
-	PointLight pointLight0
-	{
-		{
-			//vec3(1.0f, 1.0f, 1.0f), vec3(1.0f, 1.0f, 1.0f), vec3(1.0f ,1.0f, 1.0f)
-			vec3(0, 0, 0), vec3(0.8f, 0.3f, 0.3f), vec3(0.8f, 0.3f, 0.3f)
-			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-		},
-		vec3(0, 1.0f, -1.0f),
-		// attenuation
-		1.0f,
-		0.09f,
-		0.032f
-	};
-	pointLights.push_back(pointLight0);
-
-	// Spotlights
-	SpotLight spotLight0
-	{
-		{
-			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
-			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-		},
-		vec3(0, 0, -2.0f),
-		vec3(0, 0, 1.0f),
-		// cut-off
-		0.6f,
-		0.3f,
-		// attenuation
-		1.0f,
-		0.09f,
-		0.032f
-	};
-	spotLights.push_back(spotLight0);
-
-	//SpotLight spotLight1
-	//{
-	//	{
-	//		vec3(0, 0, 0), vec3(0.3f, 0.8f, 0.8f), vec3(0.3f, 0.8f, 0.8f)
-	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-	//	},
-	//	vec3(-1.5f, 0, 0),
-	//	vec3(0, 0, 0),
-	//	// cut-off
-	//	0.91f,
-	//	0.82f,
-	//	// attenuation
-	//	1.0f,
-	//	0.7f,
-	//	1.8f
-	//};
-	//spotLights.push_back(spotLight1);
-}
-
-void ViewModel::setUpModelPositions()
-{
-	models[0].m_model = glm::scale(models[0].m_model, glm::vec3(0.2f, 0.2f, 0.2f));
 }

@@ -7,20 +7,21 @@
 
 #include "shader.hpp"
 #include "mesh.hpp"
-#include "textureloading.hpp"
+#include "textures/textureloading.hpp"
 
 class Model
 {
 public:
-    std::vector<Mesh> meshes;
+    
     glm::mat4 m_model = glm::mat4(1.0f);
 
     Model(const char* path);
     
-    void draw(const std::shared_ptr<Shader> shader);
-private:    
+    void draw(const std::shared_ptr<Shader> shader) const;
+protected:    
     std::vector<Texture> textures_loaded;
     std::string directory;
+    std::vector<Mesh> meshes;
 
     void loadModel(std::string path);
     void processNode(aiNode* node, const aiScene* scene);

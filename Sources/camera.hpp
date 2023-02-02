@@ -9,8 +9,9 @@ protected:
 	glm::vec3 cameraPosition;
 	glm::vec3 cameraTarget;
 	glm::vec3 cameraUp;
-public:
+
 	Camera(glm::vec3 cameraPosition, glm::vec3 cameraTarget);
+public:
 	glm::mat4 getLookAt();
 	glm::vec3 getCameraPosition();
 	glm::vec3 getTargetPosition();

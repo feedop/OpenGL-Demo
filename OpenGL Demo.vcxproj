@@ -151,8 +151,10 @@
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\mesh.cpp" />
     <ClCompile Include="Sources\model.cpp" />
-    <ClCompile Include="Sources\skybox.cpp" />
-    <ClCompile Include="Sources\textureloading.cpp" />
+    <ClCompile Include="Sources\movablemodel.cpp" />
+    <ClCompile Include="Sources\repository.cpp" />
+    <ClCompile Include="Sources\textures\skybox.cpp" />
+    <ClCompile Include="Sources\textures\textureloading.cpp" />
     <ClCompile Include="Sources\viewmodel.cpp" />
     <ClCompile Include="Sources\shader.cpp" />
   </ItemGroup>
@@ -167,9 +169,11 @@
     <ClInclude Include="Sources\light.hpp" />
     <ClInclude Include="Sources\mesh.hpp" />
     <ClInclude Include="Sources\model.hpp" />
-    <ClInclude Include="Sources\skybox.hpp" />
-    <ClInclude Include="Sources\stb_image.h" />
-    <ClInclude Include="Sources\textureloading.hpp" />
+    <ClInclude Include="Sources\movablemodel.hpp" />
+    <ClInclude Include="Sources\repository.hpp" />
+    <ClInclude Include="Sources\textures\skybox.hpp" />
+    <ClInclude Include="Sources\textures\stb_image.h" />
+    <ClInclude Include="Sources\textures\textureloading.hpp" />
     <ClInclude Include="Sources\viewmodel.hpp" />
     <ClInclude Include="Sources\shader.hpp" />
   </ItemGroup>

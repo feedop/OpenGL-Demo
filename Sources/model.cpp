@@ -12,7 +12,7 @@ Model::Model(const char* path)
     loadModel(path);
 }
 
-void Model::draw(const std::shared_ptr<Shader> shader)
+void Model::draw(const std::shared_ptr<Shader> shader) const
 {
     shader->setMatrix("u_model", m_model);
     shader->setFloat("material.shininess", 32.0);
