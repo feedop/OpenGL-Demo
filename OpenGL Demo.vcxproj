@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\..\CUDA\Boids\src\glad.c" />
     <ClCompile Include="Sources\camera.cpp" />
+    <ClCompile Include="Sources\controller.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_glfw.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui.cpp" />
@@ -155,11 +156,12 @@
     <ClCompile Include="Sources\repository.cpp" />
     <ClCompile Include="Sources\textures\skybox.cpp" />
     <ClCompile Include="Sources\textures\textureloading.cpp" />
-    <ClCompile Include="Sources\viewmodel.cpp" />
+    <ClCompile Include="Sources\presenter.cpp" />
     <ClCompile Include="Sources\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\camera.hpp" />
+    <ClInclude Include="Sources\controller.hpp" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3_loader.h" />
@@ -174,7 +176,7 @@
     <ClInclude Include="Sources\textures\skybox.hpp" />
     <ClInclude Include="Sources\textures\stb_image.h" />
     <ClInclude Include="Sources\textures\textureloading.hpp" />
-    <ClInclude Include="Sources\viewmodel.hpp" />
+    <ClInclude Include="Sources\presenter.hpp" />
     <ClInclude Include="Sources\shader.hpp" />
   </ItemGroup>
   <ItemGroup>

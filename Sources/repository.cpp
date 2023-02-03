@@ -28,79 +28,55 @@ Repository::Repository() :
 	
 	// Directional light sources
 	dirLights
+	// Main sunlight
 	{
-		//DirLight
-		//{
-		//	{
-		//		vec3(0, 0.1f, 0), vec3(0.2f, 0.6f, 0.2f), vec3(0.2f ,0.6f, 0.2f)
-		//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-		//	},
-		//	vec3(0, 0, -2.0f)
-		//};
-
 	DirLight
 	{
 		{
 			//vec3(0.1f, 0, 0), vec3(0, 0, 0), vec3(0.2f ,0, 0)
-			vec3(0.2f, 0.2f, 0.2f), vec3(0.7f, 0.7f, 0.7f), vec3(0.7f, 0.7f, 0.7f)
+			vec3(0.3f, 0.2f, 0.1f), vec3(0.7f, 0.4f, 0.15f), vec3(0.7f, 0.7f, 0.7f)
 		},
-		vec3(0, 0, -1.0f)
+		vec3(0, 0, 1.0f)
 	}
 	},
 
 	// Point light sources
 	pointLights
 	{
-	PointLight
-	{
-		{
-			//vec3(1.0f, 1.0f, 1.0f), vec3(1.0f, 1.0f, 1.0f), vec3(1.0f ,1.0f, 1.0f)
-			vec3(0, 0, 0), vec3(0.8f, 0.3f, 0.3f), vec3(0.8f, 0.3f, 0.3f)
-			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-		},
-		vec3(0, 1.0f, -1.0f),
-	// attenuation
-	1.0f,
-	0.09f,
-	0.032f
-	}
+	//PointLight
+	//{
+	//	{
+	//		//vec3(1.0f, 1.0f, 1.0f), vec3(1.0f, 1.0f, 1.0f), vec3(1.0f ,1.0f, 1.0f)
+	//		vec3(0, 0, 0), vec3(0.8f, 0.3f, 0.3f), vec3(0.8f, 0.3f, 0.3f)
+	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
+	//	},
+	//	vec3(0, 1.0f, -1.0f),
+	//// attenuation
+	//1.0f,
+	//0.09f,
+	//0.032f
+	//}
 	},
 
 	// Spotlights
 	spotLights
-	{
-	SpotLight
-	{
-		{
-			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
-			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-		},
-		vec3(0, 0, -2.0f),
-		vec3(0, 0, 1.0f),
-	// cut-off
-	0.6f,
-	0.3f,
-	// attenuation
-	1.0f,
-	0.09f,
-	0.032f
-	}
+{
 	//SpotLight
 	//{
 	//	{
-	//		vec3(0, 0, 0), vec3(0.3f, 0.8f, 0.8f), vec3(0.3f, 0.8f, 0.8f)
+	//		vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
 	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
 	//	},
-	//	vec3(-1.5f, 0, 0),
-	//	vec3(0, 0, 0),
-	//	// cut-off
-	//	0.91f,
-	//	0.82f,
-	//	// attenuation
-	//	1.0f,
-	//	0.7f,
-	//	1.8f
-	//};
+	//	vec3(0, 0, -2.0f),
+	//	vec3(0, 0, 1.0f),
+	//// cut-off
+	//0.6f,
+	//0.3f,
+	//// attenuation
+	//1.0f,
+	//0.09f,
+	//0.032f
+	//}
 	}
 #pragma endregion
 	{
@@ -109,5 +85,5 @@ Repository::Repository() :
 
 void Repository::setUpModelInitialPositions()
 {
-	playerModel.m_model = glm::translate(glm::scale(playerModel.m_model, glm::vec3(0.5f, 0.5f, 0.5f)), glm::vec3(1, 0, 0));
+	playerModel.m_model = glm::translate(glm::scale(playerModel.m_model, glm::vec3(0.3f, 0.3f, 0.3f)), glm::vec3(0, 0, 0));
 }

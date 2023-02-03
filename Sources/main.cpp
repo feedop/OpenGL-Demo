@@ -17,8 +17,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
-#include "viewmodel.hpp"
+#include "presenter.hpp"
+#include "controller.hpp"
 #include "textures/textureloading.hpp"
+
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -26,8 +28,6 @@
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
-
-void processInput(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -119,12 +119,15 @@ int main(int, char**)
     // Set up models and light sources in the repository
     Repository repository;
 
-    // Create a model manager
-    ViewModel viewModel(&repository);
+    // Create a presenter - responsible for shaders, cameras, rendering
+    Presenter presenter(&repository);
+
+    // Create a controller - responsible for object movement and user input
+    Controller controller(&repository);
 
     // Set up input processing
-    glfwSetWindowUserPointer(window, &viewModel);
-    glfwSetKeyCallback(window, processInput);
+    glfwSetWindowUserPointer(window, &presenter);
+    glfwSetKeyCallback(window, Controller::handleUserInput);
     
 
     // Main loop
@@ -152,15 +155,15 @@ int main(int, char**)
 
 		ImGui::Text("Shader mode");
 
-		ImGui::RadioButton("Solid color", &viewModel.selectedShader, 0); ImGui::SameLine();
-		ImGui::RadioButton("Gouraud interpolation", &viewModel.selectedShader, 1); ImGui::SameLine();
-		ImGui::RadioButton("Phong interpolation", &viewModel.selectedShader, 2);
+		ImGui::RadioButton("Solid color", &presenter.selectedShader, 0); ImGui::SameLine();
+		ImGui::RadioButton("Gouraud interpolation", &presenter.selectedShader, 1); ImGui::SameLine();
+		ImGui::RadioButton("Phong interpolation", &presenter.selectedShader, 2);
 
         ImGui::Text("Camera");
 
-        ImGui::RadioButton("Movable camera", &viewModel.selectedCamera, 0); ImGui::SameLine();
-        ImGui::RadioButton("Following camera", &viewModel.selectedCamera, 1); ImGui::SameLine();
-        ImGui::RadioButton("Third person camera", &viewModel.selectedCamera, 2);
+        ImGui::RadioButton("Movable camera", &presenter.selectedCamera, 0); ImGui::SameLine();
+        ImGui::RadioButton("Following camera", &presenter.selectedCamera, 1); ImGui::SameLine();
+        ImGui::RadioButton("Third person camera", &presenter.selectedCamera, 2);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
@@ -176,7 +179,7 @@ int main(int, char**)
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
-        viewModel.draw();
+        presenter.draw();
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     	
@@ -203,39 +206,4 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
-}
-
-void processInput(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    const float speed = 0.2f;
-    static float angle = 0;
-    ViewModel* viewModel = static_cast<ViewModel*>(glfwGetWindowUserPointer(window));
-    if (action == GLFW_PRESS || action == GLFW_REPEAT)
-    {
-        if (viewModel->selectedCamera == 0)
-        {
-            // Move the camera
-            switch (key)
-            {
-            /*case GLFW_KEY_W:
-                pitch += speed;
-                viewModel->rotateCamera(yaw, pitch);
-                break;
-            case GLFW_KEY_S:
-                pitch -= speed;
-                viewModel->rotateCamera(yaw, pitch);
-                break;*/
-            case GLFW_KEY_A:
-                angle += speed;
-                viewModel->rotateCameraSideways(angle);
-                break;
-            case GLFW_KEY_D:
-                angle -= speed;
-                viewModel->rotateCameraSideways(angle);
-                break;
-            }
-        }
-    }
-    
-    
 }

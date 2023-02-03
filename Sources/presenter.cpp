@@ -1,8 +1,8 @@
-#include "viewmodel.hpp"
+#include "presenter.hpp"
 
 #include <glad/glad.h>
 
-ViewModel::ViewModel(Repository* repository) : repository(repository)
+Presenter::Presenter(Repository* repository) : repository(repository)
 {
 	// Create shaders
 	shaders = {
@@ -16,7 +16,7 @@ ViewModel::ViewModel(Repository* repository) : repository(repository)
 	// Create cameras
 	cameras =
 	{
-		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1))),
+		std::shared_ptr<Camera>(new MovableCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, -0.3))),
 		std::shared_ptr<Camera>(new FollowingCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0))),
 		std::shared_ptr<Camera>(new ThirdPersonCamera(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 0)))
 	};
@@ -25,7 +25,7 @@ ViewModel::ViewModel(Repository* repository) : repository(repository)
 	m_projection = glm::perspective<float>(90.0f, 1, 0.1f, 20.0f);
 }
 
-void ViewModel::draw()
+void Presenter::draw()
 {
 	// Get updated view matrix
 	m_view = cameras[selectedCamera]->getLookAt();
@@ -58,12 +58,12 @@ void ViewModel::draw()
 	glDepthFunc(GL_LESS);
 }
 
-void ViewModel::updateCamera(glm::vec3 position, glm::vec3 front)
+void Presenter::updateCamera(glm::vec3 position, glm::vec3 front)
 {
 	cameras[selectedCamera]->updateCamera(position, front);
 }
 
-//void ViewModel::rotateCameraUpDown(float pitch)
+//void Presenter::rotateCameraUpDown(float pitch)
 //{
 //	glm::vec3 cameraPosition = cameras[selectedCamera]->getCameraPosition();
 //	float radius = cameras[selectedCamera]->getDistanceToTarget();
@@ -75,7 +75,7 @@ void ViewModel::updateCamera(glm::vec3 position, glm::vec3 front)
 //	cameras[selectedCamera]->updateCamera(glm::vec3(cameraPosition.x, camY, camZ), glm::vec3(0, 0, 0));
 //}
 
-void ViewModel::rotateCameraSideways(float angle)
+void Presenter::rotateCameraSideways(float angle)
 {
 	glm::vec3 cameraPosition = cameras[selectedCamera]->getCameraPosition();
 	glm::vec3 targetPosition = cameras[selectedCamera]->getTargetPosition();

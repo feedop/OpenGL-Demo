@@ -14,13 +14,13 @@
 
 using namespace glm;
 
-class ViewModel
+class Presenter
 {
 public:
     int selectedShader = 2;
     int selectedCamera = 0;
 
-    ViewModel(Repository* repository);
+    Presenter(Repository* repository);
     void draw();
     void updateCamera(vec3 position, vec3 front);
     void rotateCameraSideways(float angle);
