@@ -114,10 +114,14 @@ void Shader::setMatrix(const char* name, glm::mat4 matrix) const
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+SolidColorShader::SolidColorShader() : Shader("Shaders\\solidcolor.vert", "Shaders\\solidcolor.frag") {}
+
 void SolidColorShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
     
 }
+
+GouraudShader::GouraudShader() : Shader("Shaders\\gouraud.vert", "Shaders\\gouraud.frag") {}
 
 void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
@@ -163,6 +167,8 @@ void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const st
     setInt("spotLightCount", spotLights.size());
 }
 
+PhongShader::PhongShader() : Shader("Shaders\\phong.vert", "Shaders\\phong.frag") {}
+
 void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
     // Directional lights
@@ -206,6 +212,8 @@ void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std:
     setInt("pointLightCount", pointLights.size());
     setInt("spotLightCount", spotLights.size());
 }
+
+SkyboxShader::SkyboxShader() : Shader("Shaders\\skybox.vert", "Shaders\\skybox.frag") {}
 
 void SkyboxShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {

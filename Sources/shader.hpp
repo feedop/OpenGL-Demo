@@ -13,7 +13,7 @@ public:
     // the program ID
     unsigned int ID;
     // use/activate the shader
-    virtual ~Shader() {}
+    virtual ~Shader() = default;
     virtual void use();
     // utility uniform functions
     virtual void setFloat(const char* name, float value) const;
@@ -29,27 +29,27 @@ protected:
 class SolidColorShader : public Shader
 {
 public:
-    SolidColorShader() : Shader("Shaders\\solidcolor.vert", "Shaders\\solidcolor.frag") {}
+    SolidColorShader();
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class GouraudShader : public Shader
 {
 public:
-    GouraudShader() : Shader("Shaders\\gouraud.vert", "Shaders\\gouraud.frag") {}
+    GouraudShader();
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class PhongShader : public Shader
 {
 public:
-    PhongShader() : Shader("Shaders\\phong.vert", "Shaders\\phong.frag") {}
+    PhongShader();
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class SkyboxShader : public Shader
 {
 public:
-    SkyboxShader() : Shader("Shaders\\skybox.vert", "Shaders\\skybox.frag") {}
+    SkyboxShader();
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };

@@ -28,11 +28,15 @@ glm::vec3 Camera::calculateCameraUp()
     return up;
 }
 
+StaticCamera::StaticCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
+
 glm::mat4 StaticCamera::getProjection() const
 {
-    return glm::perspective<float>(40.0f, 1, 0.1f, 10000.0f);
+    return glm::perspective<float>(20.0f, 1, 0.1f, 10000.0f);
 }
 
+
+FollowingCamera::FollowingCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
 
 void FollowingCamera::updateCamera(glm::vec3 position)
 {
@@ -44,6 +48,8 @@ glm::mat4 FollowingCamera::getProjection() const
 {
     return glm::perspective<float>(20.0f, 1, 0.1f, 10000.0f);
 }
+
+ThirdPersonCamera::ThirdPersonCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget), cameraFront(glm::vec3(1, 0 ,0)) {}
 
 void ThirdPersonCamera::updateCamera(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 {
