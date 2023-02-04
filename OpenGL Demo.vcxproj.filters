@@ -84,6 +84,9 @@
     <ClCompile Include="Sources\aimodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\lightattachment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\aimodel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\lightattachment.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

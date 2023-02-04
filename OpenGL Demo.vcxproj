@@ -150,6 +150,7 @@
     <ClCompile Include="Sources\GUI\imgui\imgui_draw.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui_tables.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Sources\lightattachment.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\mesh.cpp" />
     <ClCompile Include="Sources\model.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Sources\GUI\imgui\imgui.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui_internal.h" />
     <ClInclude Include="Sources\light.hpp" />
+    <ClInclude Include="Sources\lightattachment.hpp" />
     <ClInclude Include="Sources\mesh.hpp" />
     <ClInclude Include="Sources\model.hpp" />
     <ClInclude Include="Sources\playermodel.hpp" />

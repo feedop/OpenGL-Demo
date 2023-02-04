@@ -49,6 +49,7 @@ void PlayerModel::move()
 	calculateModelMatrix();
 	followingCamera->updateCamera(position);
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::diveDown()
@@ -60,6 +61,7 @@ void PlayerModel::diveDown()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::pullUp()
@@ -71,6 +73,7 @@ void PlayerModel::pullUp()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::turnLeft()
@@ -82,6 +85,7 @@ void PlayerModel::turnLeft()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::turnRight()
@@ -93,6 +97,7 @@ void PlayerModel::turnRight()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::increaseVelocity()
@@ -116,6 +121,7 @@ void PlayerModel::rollLeft()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
 }
 
 void PlayerModel::rollRight()
@@ -127,6 +133,20 @@ void PlayerModel::rollRight()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
+}
+
+void PlayerModel::updateAttachedLights()
+{
+	for (auto& pointLight : attachedPointLights)
+	{
+		pointLight->updatePosition(position, front, right, up);
+	}
+
+	for (auto& pointLight : attachedSpotLights)
+	{
+		pointLight->updatePosition(position, front, right, up, front);
+	}
 }
 
 glm::vec3 PlayerModel::getPosition() const

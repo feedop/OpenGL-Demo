@@ -9,7 +9,7 @@ void Controller::moveAll()
 {
 	repository->playerModel.move();
 
-	for (AIModel aiModel : repository->aiModels)
+	for (AIModel& aiModel : repository->aiModels)
 	{
 		aiModel.move();
 	}

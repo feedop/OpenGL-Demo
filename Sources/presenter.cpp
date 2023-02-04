@@ -44,10 +44,10 @@ void Presenter::draw()
 	// Draw every model
 	repository->playerModel.draw(shaders[selectedShader]);
 
-	for (Model model : repository->aiModels)
+	for (Model& model : repository->aiModels)
 		model.draw(shaders[selectedShader]);
 
-	for (Model model : repository->staticModels)
+	for (Model& model : repository->staticModels)
 		model.draw(shaders[selectedShader]);
 
 	// Draw the background

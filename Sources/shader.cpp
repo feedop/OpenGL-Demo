@@ -146,7 +146,7 @@ void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const st
         setVector(std::format("pointLights[{}].specular", i).c_str(), pointLights[i].specular);
     }
 
-    // Spotlights
+    // Spotlight
     for (int i = 0; i < spotLights.size(); i++)
     {
         setVector(std::format("spotLights[{}].position", i).c_str(), spotLights[i].position);

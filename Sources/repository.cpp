@@ -3,6 +3,8 @@
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 
+#include "lightattachment.hpp"
+
 Repository::Repository() :
 #pragma region model initialization
 
@@ -202,6 +204,7 @@ Repository::Repository() :
 #pragma endregion
 	{
 		setUpModelInitialPositions();
+		attachLights();
 	}
 
 void Repository::setUpModelInitialPositions()
@@ -234,4 +237,50 @@ void Repository::setUpModelInitialPositions()
 			glm::pi<float>() * 0.5f, glm::vec3(0, 1, 0)),
 			glm::pi<float>() * 0.5f, glm::vec3(0, 0, -1))
 	);
+}
+
+void Repository::attachLights()
+{
+	SpotLight leftWingLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
+			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
+		},
+		vec3(0, 0, 0),
+		vec3(1, 0, 0),
+		// cut-off
+		glm::cos(glm::radians(7.0f)),
+		glm::cos(glm::radians(10.0f)),
+		// attenuation
+		1.0f,
+		0.00005f,
+		0.000001f
+	};
+	spotLights.push_back(leftWingLight);
+	
+
+	SpotLight rightWingLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
+			//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
+		},
+		vec3(0, 0, 0),
+		vec3(1, 0, 0),
+		// cut-off
+		glm::cos(glm::radians(7.0f)),
+		glm::cos(glm::radians(10.0f)),
+		// attenuation
+		1.0f,
+		0.00005f,
+		0.000001f
+	};
+	spotLights.push_back(rightWingLight);
+
+	// Attach the lights
+	playerModel.attachSpotLight(0, -50.0f, 0, &spotLights[spotLights.size() - 2]);
+	playerModel.attachSpotLight(0, 50.0f, 0, &spotLights[spotLights.size() - 1]);
+
+	playerModel.updateAttachedLights();
 }

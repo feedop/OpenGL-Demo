@@ -20,4 +20,5 @@ public:
 	Repository();
 private:
 	void setUpModelInitialPositions();
+	void attachLights();
 };

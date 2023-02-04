@@ -178,5 +178,14 @@ void MovableModel::setPosition(glm::vec3 position)
     this->position = position;
 }
 
-MovableModel::MovableModel(const char* path) : Model(path)
-{}
+void MovableModel::attachPointLight(float relativeFront, float relativeRight, float relativeUp, PointLight* pointLight)
+{
+    attachedPointLights.push_back(std::make_unique<PointLightAttachment>(relativeFront, relativeRight, relativeUp, pointLight));
+}
+
+void MovableModel::attachSpotLight(float relativeFront, float relativeRight, float relativeUp, SpotLight* spotLight)
+{
+    attachedSpotLights.push_back(std::make_unique<SpotLightAttachment>(relativeFront, relativeRight, relativeUp, spotLight));
+}
+
+MovableModel::MovableModel(const char* path) : Model(path) {}

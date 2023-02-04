@@ -18,7 +18,7 @@ class Presenter
 {
 public:
     int selectedShader = 2;
-    int selectedCamera = 0;
+    int selectedCamera = 2;
 
     Presenter(Repository* repository);
     void draw();
