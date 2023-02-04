@@ -14,7 +14,8 @@ Repository::Repository() :
 		//"Models/Sphere.obj",
 		//"Models/backpack/backpack.obj"
 		//"Models/x-wing/x-wing-flyingv1.obj"
-		"Models/imperial-star-destroyer/Star_destroyer.obj"
+		//"Models/imperial-star-destroyer/Star_destroyer.obj"
+		"Models/venator/source/VenatorLow.fbx"
 	},
 
 	aiModels
@@ -86,6 +87,6 @@ Repository::Repository() :
 void Repository::setUpModelInitialPositions()
 {
 	staticModels[0].setModelMatrix(
-		glm::translate(glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 0.3f, 0.3f)), glm::vec3(0, 0, 2))
+		glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1, 1, 1))
 	);
 }

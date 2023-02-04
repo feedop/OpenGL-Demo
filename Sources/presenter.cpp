@@ -4,9 +4,9 @@
 
 Presenter::Presenter(Repository* repository) : 
 	repository(repository),
-	staticCamera(new StaticCamera(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0))),
-	followingCamera(new FollowingCamera(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0))),
-	thirdPersonCamera(new ThirdPersonCamera(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0)))
+	staticCamera(new StaticCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0))),
+	followingCamera(new FollowingCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0))),
+	thirdPersonCamera(new ThirdPersonCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0)))
 {
 	// Create shaders
 	shaders = {
@@ -18,14 +18,10 @@ Presenter::Presenter(Repository* repository) :
 	skyboxShader = std::shared_ptr<Shader>(new SkyboxShader);
 
 	// Create cameras
-
 	cameras =
 	{
 		staticCamera, followingCamera, thirdPersonCamera
 	};
-
-	// Projection matrix
-	projectionMatrix = glm::perspective<float>(30.0f, 1, 0.1f, 100.0f);
 
 	// Attach cameras to the player model
 	repository->playerModel.attachFollowingCamera(followingCamera);
@@ -35,7 +31,8 @@ Presenter::Presenter(Repository* repository) :
 void Presenter::draw()
 {
 	// Get updated view matrix
-	viewMatrix = cameras[selectedCamera]->getView();
+	glm::mat4 viewMatrix = cameras[selectedCamera]->getView();
+	glm::mat4 projectionMatrix = cameras[selectedCamera]->getProjection();
 
 	// Use the selected shader and provite it with necessary uniforms
 	shaders[selectedShader]->use();

@@ -28,10 +28,10 @@ private:
     static constexpr float pitchAngle = 0.1f;
     static constexpr float yawAngle = 0.1f;
     static constexpr float rollAngle = 0.1f;
-    static constexpr float acceleration = 0.01f;
-    static constexpr float maxSpeed = 0.1f;
+    static constexpr float acceleration = 0.1f;
+    static constexpr float maxSpeed = 1;
 
-    static constexpr float scale = 0.001f;
+    static constexpr float scale = 0.01f;
 
     float velocity = 0;
     glm::mat4 rotationMatrix = glm::mat4(1.0f);

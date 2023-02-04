@@ -14,6 +14,7 @@ protected:
 	glm::vec3 calculateCameraUp();
 public:
 	virtual glm::mat4 getView() const;
+	virtual glm::mat4 getProjection() const = 0;
 	glm::vec3 getCameraPosition();
 };
 
@@ -22,6 +23,7 @@ class StaticCamera : public Camera
 {
 public:
 	StaticCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
+	glm::mat4 getProjection() const override;
 };
 
 class FollowingCamera : public Camera
@@ -29,12 +31,16 @@ class FollowingCamera : public Camera
 public:
 	FollowingCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
 	void updateCamera(glm::vec3 position);
+	glm::mat4 getProjection() const override;
 };
 
 class ThirdPersonCamera : public Camera
 {
+private:
+	glm::vec3 cameraFront;
 public:
 	ThirdPersonCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
 	void updateCamera(glm::vec3 position, glm::vec3 front, glm::vec3 up);
 	glm::mat4 getView() const override;
+	glm::mat4 getProjection() const override;
 };

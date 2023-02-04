@@ -50,7 +50,7 @@ void PlayerModel::pullUp()
 
 void PlayerModel::turnLeft()
 {
-	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), -yawAngle, up);
+	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), yawAngle, up);
 	rotationMatrix = rotation * rotationMatrix;
 	front =  rotation * glm::vec4(front, 1.0f);
 	right = rotation * glm::vec4(right, 1.0f);
@@ -61,7 +61,7 @@ void PlayerModel::turnLeft()
 
 void PlayerModel::turnRight()
 {
-	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), yawAngle, up);
+	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), -yawAngle, up);
 	rotationMatrix = rotation * rotationMatrix;
 	front = rotation * glm::vec4(front, 1.0f);
 	right = rotation * glm::vec4(right, 1.0f);
