@@ -165,6 +165,9 @@ int main(int, char**)
         ImGui::RadioButton("Following camera", &presenter.selectedCamera, 1); ImGui::SameLine();
         ImGui::RadioButton("Third person camera", &presenter.selectedCamera, 2);
 
+        glm::vec3 playerPosition = controller.getPlayerPosition();
+        ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);
+
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 

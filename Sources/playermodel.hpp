@@ -24,12 +24,14 @@ public:
     void decreaseVelocity();
     void rollLeft();
     void rollRight();
+
+    glm::vec3 getPosition() const;
 private:
     static constexpr float pitchAngle = 0.1f;
     static constexpr float yawAngle = 0.1f;
     static constexpr float rollAngle = 0.1f;
-    static constexpr float acceleration = 0.1f;
-    static constexpr float maxSpeed = 1;
+    static constexpr float acceleration = 0.2f;
+    static constexpr float maxSpeed = 4;
 
     static constexpr float scale = 0.01f;
 

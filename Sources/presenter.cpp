@@ -5,7 +5,7 @@
 Presenter::Presenter(Repository* repository) : 
 	repository(repository),
 	staticCamera(new StaticCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0))),
-	followingCamera(new FollowingCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0))),
+	followingCamera(new FollowingCamera(glm::vec3(-430, -930, -730), glm::vec3(0, 0, 0))),
 	thirdPersonCamera(new ThirdPersonCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0)))
 {
 	// Create shaders

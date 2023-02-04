@@ -1,7 +1,32 @@
 #include "playermodel.hpp"
 
 PlayerModel::PlayerModel(const char* path) : MovableModel(path)
-{}
+{
+	// set initial posiiton
+	position = glm::vec3(-1500, 0, -1000);
+
+	// set initial orentation
+
+	// roll
+	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::pi<float>() * 0.5f, front);
+	rotationMatrix = rotation * rotationMatrix;
+	up = rotation * glm::vec4(up, 1.0f);
+	right = rotation * glm::vec4(right, 1.0f);
+
+	// pitch
+	rotation = glm::rotate(glm::mat4(1.0f), glm::pi<float>() * 0.4f, right);
+	rotationMatrix = rotation * rotationMatrix;
+	front = rotation * glm::vec4(front, 1.0f);
+	up = rotation * glm::vec4(up, 1.0f);
+
+	// yaw
+	rotation = glm::rotate(glm::mat4(1.0f), glm::pi<float>(), up);
+	rotationMatrix = rotation * rotationMatrix;
+	front = rotation * glm::vec4(front, 1.0f);
+	right = rotation * glm::vec4(right, 1.0f);
+
+	calculateModelMatrix();
+}
 
 void PlayerModel::attachThirdPersonCamera(std::shared_ptr<ThirdPersonCamera> thirdPersonCamera)
 {
@@ -102,6 +127,11 @@ void PlayerModel::rollRight()
 
 	calculateModelMatrix();
 	thirdPersonCamera->updateCamera(position, front, up);
+}
+
+glm::vec3 PlayerModel::getPosition() const
+{
+	return position;
 }
 
 void PlayerModel::calculateModelMatrix()

@@ -15,6 +15,11 @@ void Controller::moveAll()
 	}
 }
 
+glm::vec3 Controller::getPlayerPosition() const
+{
+    return repository->playerModel.getPosition();
+}
+
 // Handle keyboard input by rotating the player model
 void Controller::handleUserInput(GLFWwindow * window, int key, int scancode, int action, int mods)
 {

@@ -43,8 +43,8 @@ struct SpotLight {
 };
 
 #define MAX_DIR_LIGHTS 5
-#define MAX_POINT_LIGHTS 5
-#define MAX_SPOT_LIGHTS 5
+#define MAX_POINT_LIGHTS 20
+#define MAX_SPOT_LIGHTS 20
 
 in vec3 FragPos;
 in vec3 Normal;

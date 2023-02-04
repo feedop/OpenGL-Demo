@@ -48,8 +48,8 @@ struct SpotLight {
 };
 
 #define MAX_DIR_LIGHTS 5
-#define MAX_POINT_LIGHTS 5
-#define MAX_SPOT_LIGHTS 5
+#define MAX_POINT_LIGHTS 20
+#define MAX_SPOT_LIGHTS 20
 
 uniform vec3 viewPos;
 uniform DirLight dirLights[MAX_DIR_LIGHTS];

@@ -15,7 +15,10 @@ Repository::Repository() :
 		//"Models/backpack/backpack.obj"
 		//"Models/x-wing/x-wing-flyingv1.obj"
 		//"Models/imperial-star-destroyer/Star_destroyer.obj"
-		"Models/venator/source/VenatorLow.fbx"
+		//"Models/venator/source/VenatorLow.fbx"
+		"Models/venator2/source/RepublicVenator2.fbx",
+		"Models/venator2/source/RepublicVenator2.fbx",
+		"Models/lucrehulk/cis_cap_fedcoreship.obj"
 	},
 
 	aiModels
@@ -35,7 +38,7 @@ Repository::Repository() :
 	{
 		{
 			//vec3(0.1f, 0, 0), vec3(0, 0, 0), vec3(0.2f ,0, 0)
-			vec3(0.3f, 0.2f, 0.1f), vec3(0.7f, 0.4f, 0.15f), vec3(0.7f, 0.7f, 0.7f)
+			vec3(0.3f, 0.2f, 0.1f), vec3(0.85f, 0.55f, 0.4f), vec3(0.85f, 0.85f, 0.85f)
 		},
 		vec3(0, 0, 1.0f)
 	}
@@ -44,20 +47,137 @@ Repository::Repository() :
 	// Point light sources
 	pointLights
 	{
-	//PointLight
-	//{
-	//	{
-	//		//vec3(1.0f, 1.0f, 1.0f), vec3(1.0f, 1.0f, 1.0f), vec3(1.0f ,1.0f, 1.0f)
-	//		vec3(0, 0, 0), vec3(0.8f, 0.3f, 0.3f), vec3(0.8f, 0.3f, 0.3f)
-	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-	//	},
-	//	vec3(0, 1.0f, -1.0f),
-	//// attenuation
-	//1.0f,
-	//0.09f,
-	//0.032f
-	//}
+	// Left venator
+
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1270, -1300, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
 	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1490, -1165, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1490, -865, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1270, -710, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+
+	// Right venator
+
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1270, 1300, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1490, 1165, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1490, 865, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(-1270, 710, -155),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+
+	// Lucrehulk
+
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(6270, -310, -21),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(6300, -20, -145),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.3f, 0.3f, 1.0f), vec3(0.3f, 0.3f, 1.0f)
+		},
+		vec3(6270, 310, -21),
+		// attenuation
+		1.0f,
+		0.001f,
+		0.00001f
+	}
+	},
+
 
 	// Spotlights
 	spotLights
@@ -87,6 +207,31 @@ Repository::Repository() :
 void Repository::setUpModelInitialPositions()
 {
 	staticModels[0].setModelMatrix(
-		glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1, 1, 1))
+		glm::rotate(
+			glm::scale(
+				glm::translate(
+					glm::mat4(1.0f), glm::vec3(0, -1000, 0)),
+				glm::vec3(0.1f, 0.1f, 0.1f)),
+			glm::pi<float>(), glm::vec3(1, 0, 0))
+	);
+
+	staticModels[1].setModelMatrix(
+		glm::rotate(
+			glm::scale(
+				glm::translate(
+					glm::mat4(1.0f), glm::vec3(0, 1000, 0)),
+				glm::vec3(0.1f, 0.1f, 0.1f)),
+			glm::pi<float>(), glm::vec3(1, 0, 0))
+	);
+
+	staticModels[2].setModelMatrix(
+		glm::rotate(
+		glm::rotate(
+			glm::scale(
+				glm::translate(
+					glm::mat4(1.0f), glm::vec3(4000, 0, 0)),
+				glm::vec3(300, 300, 300)),
+			glm::pi<float>() * 0.5f, glm::vec3(0, 1, 0)),
+			glm::pi<float>() * 0.5f, glm::vec3(0, 0, -1))
 	);
 }
