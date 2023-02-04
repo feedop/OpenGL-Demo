@@ -1,6 +1,6 @@
 #include "controller.hpp"
-
-#include "presenter.hpp"
+#include "playermodel.hpp"
+#include "aimodel.hpp"
 
 Controller::Controller(Repository* repository) : repository(repository)
 {}
@@ -15,59 +15,43 @@ void Controller::moveAll()
 	}
 }
 
+// Handle keyboard input by rotating the player model
 void Controller::handleUserInput(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-    const float speed = 0.2f;
-    static float angle = 0;
-    Presenter* presenter = static_cast<Presenter*>(glfwGetWindowUserPointer(window));
+    Controller* controller = static_cast<Controller*>(glfwGetWindowUserPointer(window));
+
     if (action == GLFW_PRESS || action == GLFW_REPEAT)
     {
-        if (presenter->selectedCamera == 0)
+        switch (key)
         {
-            // Move the camera
-            switch (key)
-            {
-                /*case GLFW_KEY_W:
-                    pitch += speed;
-                    Presenter->rotateCamera(yaw, pitch);
-                    break;
-                case GLFW_KEY_S:
-                    pitch -= speed;
-                    Presenter->rotateCamera(yaw, pitch);
-                    break;*/
+            // pitch
+            case GLFW_KEY_W:
+                controller->repository->playerModel.diveDown();
+                break;
+            case GLFW_KEY_S:
+                controller->repository->playerModel.pullUp();
+                break;
+            // yaw
             case GLFW_KEY_A:
-                angle += speed;
-                presenter->rotateCameraSideways(angle);
+                controller->repository->playerModel.turnLeft();
                 break;
             case GLFW_KEY_D:
-                angle -= speed;
-                presenter->rotateCameraSideways(angle);
+                controller->repository->playerModel.turnRight();
                 break;
-            }
+            // velocity
+            case GLFW_KEY_UP:
+                controller->repository->playerModel.increaseVelocity();
+                break;
+            case GLFW_KEY_DOWN:
+                controller->repository->playerModel.decreaseVelocity();
+                break;
+            // roll
+            case GLFW_KEY_LEFT:
+                controller->repository->playerModel.rollLeft();
+                break;
+            case GLFW_KEY_RIGHT:
+                controller->repository->playerModel.rollRight();
+                break;
         }
     }
 }
-
-void Controller::diveDown()
-{}
-
-void Controller::pullUp()
-{}
-
-void Controller::turnLeft()
-{}
-
-void Controller::turnRight()
-{}
-
-void Controller::increaseVelocity()
-{}
-
-void Controller::decreaseVelocity()
-{}
-
-void Controller::rollLeft()
-{}
-
-void Controller::rollRight()
-{}

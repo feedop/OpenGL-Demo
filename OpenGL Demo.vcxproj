@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\..\CUDA\Boids\src\glad.c" />
+    <ClCompile Include="Sources\aimodel.cpp" />
     <ClCompile Include="Sources\camera.cpp" />
     <ClCompile Include="Sources\controller.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_glfw.cpp" />
@@ -152,7 +153,7 @@
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\mesh.cpp" />
     <ClCompile Include="Sources\model.cpp" />
-    <ClCompile Include="Sources\movablemodel.cpp" />
+    <ClCompile Include="Sources\playermodel.cpp" />
     <ClCompile Include="Sources\repository.cpp" />
     <ClCompile Include="Sources\textures\skybox.cpp" />
     <ClCompile Include="Sources\textures\textureloading.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Sources\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\aimodel.hpp" />
     <ClInclude Include="Sources\camera.hpp" />
     <ClInclude Include="Sources\controller.hpp" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h" />
@@ -171,7 +173,7 @@
     <ClInclude Include="Sources\light.hpp" />
     <ClInclude Include="Sources\mesh.hpp" />
     <ClInclude Include="Sources\model.hpp" />
-    <ClInclude Include="Sources\movablemodel.hpp" />
+    <ClInclude Include="Sources\playermodel.hpp" />
     <ClInclude Include="Sources\repository.hpp" />
     <ClInclude Include="Sources\textures\skybox.hpp" />
     <ClInclude Include="Sources\textures\stb_image.h" />

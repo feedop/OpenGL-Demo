@@ -11,33 +11,30 @@ protected:
 	glm::vec3 cameraUp;
 
 	Camera(glm::vec3 cameraPosition, glm::vec3 cameraTarget);
-public:
-	glm::mat4 getLookAt();
-	glm::vec3 getCameraPosition();
-	glm::vec3 getTargetPosition();
 	glm::vec3 calculateCameraUp();
-	float getDistanceToTarget();
-	virtual void updateCamera(glm::vec3 position, glm::vec3 front) = 0;
+public:
+	virtual glm::mat4 getView() const;
+	glm::vec3 getCameraPosition();
 };
 
 // Represents a camera that can be moved by keyboard input
-class MovableCamera : public Camera
+class StaticCamera : public Camera
 {
 public:
-	MovableCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
-	void updateCamera(glm::vec3 position, glm::vec3 front) override;
+	StaticCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
 };
 
 class FollowingCamera : public Camera
 {
 public:
 	FollowingCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
-	void updateCamera(glm::vec3 position, glm::vec3 front) override;
+	void updateCamera(glm::vec3 position);
 };
 
 class ThirdPersonCamera : public Camera
 {
 public:
 	ThirdPersonCamera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : Camera(cameraPosition, cameraTarget) {}
-	void updateCamera(glm::vec3 position, glm::vec3 front) override;
+	void updateCamera(glm::vec3 position, glm::vec3 front, glm::vec3 up);
+	glm::mat4 getView() const override;
 };

@@ -8,12 +8,12 @@ out vec3 FragPos;
 out vec2 TexCoords;
 
 uniform mat4 u_model;
-uniform mat4 u_view;
-uniform mat4 u_projection;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 
 void main()
 {
-    gl_Position = u_projection * u_view * u_model * vec4(aPos, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * u_model * vec4(aPos, 1.0);
     Normal = mat3(transpose(inverse(u_model))) * aNormal;
     FragPos = vec3(u_model * vec4(aPos, 1.0));
     TexCoords = aTexCoords;

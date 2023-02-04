@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "movablemodel.hpp"
+#include "playermodel.hpp"
+#include "aimodel.hpp"
 #include "light.hpp"
 
 class Repository

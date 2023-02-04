@@ -14,11 +14,16 @@ Model::Model(const char* path)
 
 void Model::draw(const std::shared_ptr<Shader> shader) const
 {
-    shader->setMatrix("u_model", m_model);
+    shader->setMatrix("u_model", modelMatrix);
     shader->setFloat("material.shininess", 32.0);
 
 	for (Mesh mesh : meshes)
 		mesh.draw(shader);
+}
+
+void Model::setModelMatrix(glm::mat4 modelMatrix)
+{
+    this->modelMatrix = modelMatrix;
 }
 
 void Model::loadModel(std::string path)
@@ -165,3 +170,13 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
     }
     return textures;
 }
+
+// Movable model abstract class
+
+void MovableModel::setPosition(glm::vec3 position)
+{
+    this->position = position;
+}
+
+MovableModel::MovableModel(const char* path) : Model(path)
+{}

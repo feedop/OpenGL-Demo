@@ -6,7 +6,7 @@ Camera::Camera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : cameraPositio
     cameraUp = calculateCameraUp();
 }
 
-glm::mat4 Camera::getLookAt()
+glm::mat4 Camera::getView() const
 {
     return glm::lookAt(cameraPosition, cameraTarget, cameraUp);
 }
@@ -14,11 +14,6 @@ glm::mat4 Camera::getLookAt()
 glm::vec3 Camera::getCameraPosition()
 {
     return cameraPosition;
-}
-
-glm::vec3 Camera::getTargetPosition()
-{
-    return cameraTarget;
 }
 
 glm::vec3 Camera::calculateCameraUp()
@@ -29,22 +24,20 @@ glm::vec3 Camera::calculateCameraUp()
     return glm::cross(cameraDirection, cameraRight);
 }
 
-float Camera::getDistanceToTarget()
-{
-    return glm::length(cameraTarget - cameraPosition);
-}
-
-void MovableCamera::updateCamera(glm::vec3 position, glm::vec3 front)
-{
-    cameraPosition = position;
-}
-
-void FollowingCamera::updateCamera(glm::vec3 position, glm::vec3 front)
+void FollowingCamera::updateCamera(glm::vec3 position)
 {
     cameraTarget = position;
+    cameraUp = calculateCameraUp();
 }
 
-void ThirdPersonCamera::updateCamera(glm::vec3 position, glm::vec3 front)
+void ThirdPersonCamera::updateCamera(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 {
-    cameraPosition = position + glm::normalize(cameraUp);
+    cameraPosition = position;
+    cameraTarget = position + 10.0f * front;
+    cameraUp = up;
+}
+
+glm::mat4 ThirdPersonCamera::getView() const
+{
+    return glm::lookAt(cameraPosition + 0.1f * cameraUp, cameraTarget + +0.1f * cameraUp, cameraUp);
 }

@@ -22,10 +22,12 @@ public:
 
     Presenter(Repository* repository);
     void draw();
-    void updateCamera(vec3 position, vec3 front);
-    void rotateCameraSideways(float angle);
 private:
     Repository* repository;
+
+    std::shared_ptr<StaticCamera> staticCamera;
+    std::shared_ptr<FollowingCamera> followingCamera;
+    std::shared_ptr<ThirdPersonCamera> thirdPersonCamera;
 
     std::vector<std::shared_ptr<Shader>> shaders;
     std::vector<std::shared_ptr<Camera>> cameras;
@@ -33,8 +35,8 @@ private:
     std::shared_ptr<Shader> skyboxShader;
     Skybox skybox{};
 
-    mat4 m_view = mat4(1.0f); /*glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f),
+    mat4 viewMatrix = mat4(1.0f); /*glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f));*/
-    mat4 m_projection = mat4(1.0f);
+    mat4 projectionMatrix = mat4(1.0f);
 };

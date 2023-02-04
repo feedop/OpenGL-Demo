@@ -6,7 +6,7 @@
 Repository::Repository() :
 #pragma region model initialization
 
-	playerModel("Models/imperial-star-destroyer/Star_destroyer.obj"),
+	playerModel("Models/arc-170/arc170.obj"),
 
 	staticModels
 	{
@@ -14,7 +14,7 @@ Repository::Repository() :
 		//"Models/Sphere.obj",
 		//"Models/backpack/backpack.obj"
 		//"Models/x-wing/x-wing-flyingv1.obj"
-
+		"Models/imperial-star-destroyer/Star_destroyer.obj"
 	},
 
 	aiModels
@@ -85,5 +85,7 @@ Repository::Repository() :
 
 void Repository::setUpModelInitialPositions()
 {
-	playerModel.m_model = glm::translate(glm::scale(playerModel.m_model, glm::vec3(0.3f, 0.3f, 0.3f)), glm::vec3(0, 0, 0));
+	staticModels[0].setModelMatrix(
+		glm::translate(glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 0.3f, 0.3f)), glm::vec3(0, 0, 2))
+	);
 }

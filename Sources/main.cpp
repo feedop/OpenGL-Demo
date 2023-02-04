@@ -126,7 +126,7 @@ int main(int, char**)
     Controller controller(&repository);
 
     // Set up input processing
-    glfwSetWindowUserPointer(window, &presenter);
+    glfwSetWindowUserPointer(window, &controller);
     glfwSetKeyCallback(window, Controller::handleUserInput);
     
 
@@ -161,12 +161,15 @@ int main(int, char**)
 
         ImGui::Text("Camera");
 
-        ImGui::RadioButton("Movable camera", &presenter.selectedCamera, 0); ImGui::SameLine();
+        ImGui::RadioButton("Static camera", &presenter.selectedCamera, 0); ImGui::SameLine();
         ImGui::RadioButton("Following camera", &presenter.selectedCamera, 1); ImGui::SameLine();
         ImGui::RadioButton("Third person camera", &presenter.selectedCamera, 2);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
+
+        // Move the player and dynamic objects
+        controller.moveAll();
 
         // Rendering
         ImGui::Render();
