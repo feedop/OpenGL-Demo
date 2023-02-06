@@ -8,6 +8,8 @@
 class Controller
 {
 public:
+	bool turbulence = false;
+
 	Controller(Repository* repository);
 	void moveAll();
 	glm::vec3 getPlayerPosition() const;
@@ -16,6 +18,8 @@ public:
 
 private:
 	Repository* repository;
+	bool rolledLeft = false;
+	int turbulenceFrames = 0.0f;
 
 	struct PressedKeys
 	{

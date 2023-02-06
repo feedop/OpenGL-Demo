@@ -7,6 +7,19 @@ Controller::Controller(Repository* repository) : repository(repository)
 
 void Controller::moveAll()
 {
+    // Handle turbulence
+    if (turbulence)
+    {
+        if (turbulenceFrames == 5)
+        {
+            repository->playerModel.rollByAngle(rolledLeft ? 0.1f : -0.1f);
+            rolledLeft = !rolledLeft;
+            turbulenceFrames = 0;
+        }
+        turbulenceFrames++;
+    }
+
+    // Move the models
 	repository->playerModel.move();
 
 	for (AIModel& aiModel : repository->aiModels)

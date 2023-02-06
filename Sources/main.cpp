@@ -176,6 +176,8 @@ int main(int, char**)
         ImGui::SliderFloat("Fog density", &presenter.fogDensity, 0.0f, 1.0f);
         ImGui::ColorEdit3("Fog color", glm::value_ptr(presenter.fogColor));
 
+        ImGui::Checkbox("Turbulence", &controller.turbulence);
+
         glm::vec3 playerPosition = controller.getPlayerPosition();
         ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);
 

@@ -136,6 +136,18 @@ void PlayerModel::rollRight()
 	updateAttachedLights();
 }
 
+void PlayerModel::rollByAngle(float angle)
+{
+	glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle, front);
+	rotationMatrix = rotation * rotationMatrix;
+	up = rotation * glm::vec4(up, 1.0f);
+	right = rotation * glm::vec4(right, 1.0f);
+
+	calculateModelMatrix();
+	thirdPersonCamera->updateCamera(position, front, up);
+	updateAttachedLights();
+}
+
 
 glm::vec3 PlayerModel::getPosition() const
 {

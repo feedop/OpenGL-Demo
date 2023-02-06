@@ -25,6 +25,8 @@ public:
     void rollLeft();
     void rollRight();
 
+    void rollByAngle(float angle);
+
     glm::vec3 getPosition() const;
 private:
     static constexpr float pitchAngle = 0.02f;
