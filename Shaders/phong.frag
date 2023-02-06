@@ -36,6 +36,11 @@ struct SpotLight {
     vec3 specular;       
 };
 
+struct Fog {
+    vec3 color;
+    float density;
+};
+
 #define MAX_DIR_LIGHTS 5
 #define MAX_POINT_LIGHTS 20
 #define MAX_SPOT_LIGHTS 20
@@ -56,6 +61,8 @@ uniform int dirLightCount;
 uniform int pointLightCount;
 uniform int spotLightCount;
 
+uniform Fog fog;
+
 // function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 Diffuse, float Specular);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 Diffuse, float Specular);
@@ -73,7 +80,7 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
 
-    if (isnan(viewPos.x))
+    if (isnan(fog.color.r))
     {
         FragColor = vec4(1.0);
         return;
@@ -96,6 +103,10 @@ void main()
     for(int i = 0; i < spotLightCount; i++)
         result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir, Diffuse, Specular);    
     
+    float factor = length(viewPos - FragPos) / 1000 * fog.density;
+    float alpha = 1 / exp(factor * factor);
+    result = mix(fog.color, result, alpha);
+
     FragColor = vec4(result, 1.0);
     //FragColor = texture(material.diffuse0, TexCoords);
     //FragColor = vec4(1.0, 0.5, 0.5, 1.0);

@@ -20,9 +20,16 @@ public:
     int selectedShader = 2;
     int selectedCamera = 2;
     bool invertThirdPersonCamera = false;
+    bool night = false;
+    int nightFrames = 0;
+    constexpr static int maxFrames = 180;
+    constexpr static float frameCoefficient = 1.0f / static_cast<float>(maxFrames);
+    float fogDensity = 0.0f;
+    glm::vec3 fogColor { 1.0f, 1.0f, 1.0f };
 
     Presenter(Repository* repository);
     void draw();
+    void countFramesForNight();
 private:
     Repository* repository;
     unsigned int gBuffer = 0;
@@ -36,4 +43,8 @@ private:
 
     std::shared_ptr<Shader> skyboxShader;
     Skybox skybox{};
+
+    glm::vec3 dirLightAmbient;
+    glm::vec3 dirLightDiffuse;
+    glm::vec3 dirLightSpecular;
 };

@@ -12,9 +12,6 @@ Repository::Repository() :
 
 	staticModels
 	{
-		//"Models/x-wing/x-wing-flyingv1.obj"
-		//"Models/imperial-star-destroyer/Star_destroyer.obj"
-		//"Models/venator/source/VenatorLow.fbx"
 		"Models/venator2/source/RepublicVenator2.fbx",
 		"Models/venator2/source/RepublicVenator2.fbx",
 		"Models/lucrehulk/cis_cap_fedcoreship.obj"
@@ -39,7 +36,7 @@ Repository::Repository() :
 	{
 		{
 			//vec3(0.1f, 0, 0), vec3(0, 0, 0), vec3(0.2f ,0, 0)
-			vec3(0.3f, 0.2f, 0.1f), vec3(0.85f, 0.55f, 0.4f), vec3(0.85f, 0.85f, 0.85f)
+			vec3(0.2f, 0.15f, 0.05f), vec3(0.85f, 0.55f, 0.4f), vec3(0.85f, 0.85f, 0.85f)
 		},
 		vec3(0, 0, 1.0f)
 	}

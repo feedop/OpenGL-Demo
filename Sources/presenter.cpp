@@ -7,7 +7,10 @@ Presenter::Presenter(Repository* repository) :
 	repository(repository),
 	staticCamera(new StaticCamera(glm::vec3(4000, 0, -1000), glm::vec3(0, 0, 0))),
 	followingCamera(new FollowingCamera(glm::vec3(-430, -930, -730), glm::vec3(0, 0, 0))),
-	thirdPersonCamera(new ThirdPersonCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0)))
+	thirdPersonCamera(new ThirdPersonCamera(glm::vec3(50, 50, 0), glm::vec3(0, 0, 0))),
+	dirLightAmbient(repository->dirLights[0].ambient),
+	dirLightDiffuse(repository->dirLights[0].diffuse),
+	dirLightSpecular(repository->dirLights[0].specular)	
 {
 
 	// Set up OpenGL frame buffers
@@ -87,6 +90,8 @@ void Presenter::draw()
 	shaders[selectedShader]->setMatrix("viewMatrix", viewMatrix);
 	shaders[selectedShader]->setMatrix("projectionMatrix", projectionMatrix);
 	shaders[selectedShader]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
+	shaders[selectedShader]->setVector("fog.color", fogColor);
+	shaders[selectedShader]->setFloat("fog.density", fogDensity);
 	shaders[selectedShader]->setLighting(repository->dirLights, repository->pointLights, repository->spotLights);
 
 	glDepthMask(GL_TRUE);
@@ -109,6 +114,8 @@ void Presenter::draw()
 
 		shaders[3]->use();
 		shaders[selectedShader]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
+		shaders[selectedShader]->setVector("fog.color", fogColor);
+		shaders[selectedShader]->setFloat("fog.density", fogDensity);
 		shaders[3]->setLighting(repository->dirLights, repository->pointLights, repository->spotLights);
 
 		// copy content of geometry's depth buffer to default framebuffer's depth buffer
@@ -156,8 +163,26 @@ void Presenter::draw()
 	glm::mat4 noTranslationView = glm::mat4(glm::mat3(viewMatrix));
 	skyboxShader->setMatrix("viewMatrix", noTranslationView);
 	skyboxShader->setMatrix("projectionMatrix", projectionMatrix);
+	skyboxShader->setVector("fog.color", fogColor);
+	skyboxShader->setFloat("fog.density", fogDensity);
 
 	skybox.draw(skyboxShader);
 
 	glDepthFunc(GL_LESS);
+}
+
+void Presenter::countFramesForNight()
+{
+	if (night && nightFrames < maxFrames)
+	{
+		repository->dirLights[0].diffuse -= frameCoefficient * (dirLightDiffuse - dirLightAmbient);
+		repository->dirLights[0].specular -= frameCoefficient * (dirLightSpecular - dirLightAmbient);
+		nightFrames++;
+	}
+	else if (!night && nightFrames > 0)
+	{
+		repository->dirLights[0].diffuse += frameCoefficient * (dirLightDiffuse - dirLightAmbient);
+		repository->dirLights[0].specular += frameCoefficient * (dirLightSpecular -dirLightAmbient);
+		nightFrames--;
+	}
 }

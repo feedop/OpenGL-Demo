@@ -5,6 +5,7 @@ layout (location = 2) in vec2 aTexCoords;
 
 out vec4 LightingColor;
 out vec2 TexCoords;
+out vec3 FragPos;
 
 struct Material {
     sampler2D diffuse0;
@@ -75,6 +76,7 @@ void main()
     
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);
     TexCoords = aTexCoords;
+    FragPos = vec3(modelMatrix * vec4(aPos, 1.0));
 
     vec3 Normal = mat3(transpose(inverse(modelMatrix))) * aNormal;
     vec3 FragPos = vec3(modelMatrix * vec4(aPos, 1.0));
@@ -99,7 +101,7 @@ void main()
     // phase 3: spot light
     for(int i = 0; i < spotLightCount; i++)
         result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir);    
-    
+
     LightingColor = vec4(result, 1.0);
 }
 

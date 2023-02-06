@@ -172,6 +172,10 @@ int main(int, char**)
             ImGui::Checkbox("Invert camera direction", &presenter.invertThirdPersonCamera);
         }
 
+        ImGui::Checkbox("Night (only ambient light)", &presenter.night);
+        ImGui::SliderFloat("Fog density", &presenter.fogDensity, 0.0f, 1.0f);
+        ImGui::ColorEdit3("Fog color", glm::value_ptr(presenter.fogColor));
+
         glm::vec3 playerPosition = controller.getPlayerPosition();
         ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);
 
@@ -209,6 +213,9 @@ int main(int, char**)
         }
 
         glfwSwapBuffers(window);
+
+        // Clean transition between day and night
+        presenter.countFramesForNight();
     }
 
     // Cleanup

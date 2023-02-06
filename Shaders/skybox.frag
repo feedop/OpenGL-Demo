@@ -5,7 +5,14 @@ in vec3 TexCoords;
 
 uniform samplerCube skybox;
 
+struct Fog {
+    vec3 color;
+    float density;
+};
+
+uniform Fog fog;
+
 void main()
 {    
-    FragColor = texture(skybox, TexCoords);
+    FragColor = vec4(mix(texture(skybox, TexCoords).rgb, fog.color, fog.density), 1.0);
 }
