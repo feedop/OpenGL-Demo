@@ -165,6 +165,11 @@ int main(int, char**)
         ImGui::RadioButton("Following camera", &presenter.selectedCamera, 1); ImGui::SameLine();
         ImGui::RadioButton("Third person camera", &presenter.selectedCamera, 2);
 
+        if (presenter.selectedCamera == 2)
+        {
+            ImGui::Checkbox("Invert camera direction", &presenter.invertThirdPersonCamera);
+        }
+
         glm::vec3 playerPosition = controller.getPlayerPosition();
         ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);
 

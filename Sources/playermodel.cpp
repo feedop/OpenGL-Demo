@@ -136,18 +136,6 @@ void PlayerModel::rollRight()
 	updateAttachedLights();
 }
 
-void PlayerModel::updateAttachedLights()
-{
-	for (auto& pointLight : attachedPointLights)
-	{
-		pointLight->updatePosition(position, front, right, up);
-	}
-
-	for (auto& pointLight : attachedSpotLights)
-	{
-		pointLight->updatePosition(position, front, right, up, front);
-	}
-}
 
 glm::vec3 PlayerModel::getPosition() const
 {

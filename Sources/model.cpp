@@ -91,16 +91,6 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             vertex.TexCoords = vec;
-            //// tangent
-            //vector.x = mesh->mTangents[i].x;
-            //vector.y = mesh->mTangents[i].y;
-            //vector.z = mesh->mTangents[i].z;
-            //vertex.Tangent = vector;
-            //// bitangent
-            //vector.x = mesh->mBitangents[i].x;
-            //vector.y = mesh->mBitangents[i].y;
-            //vector.z = mesh->mBitangents[i].z;
-            //vertex.Bitangent = vector;
         }
         else
             vertex.TexCoords = glm::vec2(0.0f, 0.0f);
@@ -170,22 +160,3 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
     }
     return textures;
 }
-
-// Movable model abstract class
-
-void MovableModel::setPosition(glm::vec3 position)
-{
-    this->position = position;
-}
-
-void MovableModel::attachPointLight(float relativeFront, float relativeRight, float relativeUp, PointLight* pointLight)
-{
-    attachedPointLights.push_back(std::make_unique<PointLightAttachment>(relativeFront, relativeRight, relativeUp, pointLight));
-}
-
-void MovableModel::attachSpotLight(float relativeFront, float relativeRight, float relativeUp, SpotLight* spotLight)
-{
-    attachedSpotLights.push_back(std::make_unique<SpotLightAttachment>(relativeFront, relativeRight, relativeUp, spotLight));
-}
-
-MovableModel::MovableModel(const char* path) : Model(path) {}

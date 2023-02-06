@@ -3,7 +3,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
-#include "model.hpp"
+#include "movablemodel.hpp"
 #include "camera.hpp"
 
 class PlayerModel : public MovableModel
@@ -25,8 +25,6 @@ public:
     void rollLeft();
     void rollRight();
 
-    void updateAttachedLights();
-
     glm::vec3 getPosition() const;
 private:
     static constexpr float pitchAngle = 0.1f;
@@ -35,17 +33,12 @@ private:
     static constexpr float acceleration = 0.2f;
     static constexpr float maxSpeed = 4;
 
-    static constexpr float scale = 0.01f;
+    static constexpr float scale = 0.012f;
 
     float velocity = 0;
-    glm::mat4 rotationMatrix = glm::mat4(1.0f);
-
-    glm::vec3 front = glm::vec3(0, 0, 1);
-    glm::vec3 right = glm::vec3(-1, 0, 0);
-    glm::vec3 up = glm::vec3(0, 1, 0);
 
     std::shared_ptr<ThirdPersonCamera> thirdPersonCamera;
     std::shared_ptr<FollowingCamera> followingCamera;
 
-    void calculateModelMatrix();
+    void calculateModelMatrix() override;
 };

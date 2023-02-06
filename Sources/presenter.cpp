@@ -31,7 +31,7 @@ Presenter::Presenter(Repository* repository) :
 void Presenter::draw()
 {
 	// Get updated view matrix
-	glm::mat4 viewMatrix = cameras[selectedCamera]->getView();
+	glm::mat4 viewMatrix = cameras[selectedCamera]->getView(invertThirdPersonCamera);
 	glm::mat4 projectionMatrix = cameras[selectedCamera]->getProjection();
 
 	// Use the selected shader and provite it with necessary uniforms

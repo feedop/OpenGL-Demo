@@ -19,6 +19,7 @@ class Presenter
 public:
     int selectedShader = 2;
     int selectedCamera = 2;
+    bool invertThirdPersonCamera = false;
 
     Presenter(Repository* repository);
     void draw();

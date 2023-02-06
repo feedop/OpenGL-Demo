@@ -87,6 +87,9 @@
     <ClCompile Include="Sources\lightattachment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\movablemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\lightattachment.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\movablemodel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

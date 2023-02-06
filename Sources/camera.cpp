@@ -9,7 +9,7 @@ Camera::Camera(glm::vec3 cameraPosition, glm::vec3 cameraTarget) : cameraPositio
     cameraUp = calculateCameraUp();
 }
 
-glm::mat4 Camera::getView() const
+glm::mat4 Camera::getView(bool invertDirection) const
 {
     return glm::lookAt(cameraPosition, cameraTarget, cameraUp);
 }
@@ -59,9 +59,12 @@ void ThirdPersonCamera::updateCamera(glm::vec3 position, glm::vec3 front, glm::v
     cameraUp = -up;
 }
 
-glm::mat4 ThirdPersonCamera::getView() const
+glm::mat4 ThirdPersonCamera::getView(bool invertDirection) const
 {
-    return glm::lookAt(cameraPosition - 7.0f * cameraUp - 10.0f * cameraFront, cameraTarget , cameraUp);
+    if (invertDirection)
+        return glm::lookAt(cameraPosition - 7.0f * cameraUp + 10.0f * cameraFront, cameraPosition - (cameraTarget - cameraPosition), cameraUp);
+    else
+        return glm::lookAt(cameraPosition - 7.0f * cameraUp - 10.0f * cameraFront, cameraTarget , cameraUp);
 }
 
 glm::mat4 ThirdPersonCamera::getProjection() const

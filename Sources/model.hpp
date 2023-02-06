@@ -31,19 +31,3 @@ protected:
     std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
     
 };
-
-class MovableModel : public Model
-{
-public:
-    virtual void move() = 0;
-    void setPosition(glm::vec3 position);
-    void attachPointLight(float relativeFront, float relativeRight, float relativeUp, PointLight* pointLight);
-    void attachSpotLight(float relativeFront, float relativeRight, float relativeUp, SpotLight* spotLight);
-
-protected:
-    MovableModel(const char* path);
-
-    glm::vec3 position = glm::vec3(0, 0, 0);
-    std::vector<std::unique_ptr<PointLightAttachment>> attachedPointLights;
-    std::vector<std::unique_ptr<SpotLightAttachment>> attachedSpotLights;
-};
