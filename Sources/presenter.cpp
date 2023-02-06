@@ -113,9 +113,9 @@ void Presenter::draw()
 		glDisable(GL_DEPTH_TEST);
 
 		shaders[3]->use();
-		shaders[selectedShader]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
-		shaders[selectedShader]->setVector("fog.color", fogColor);
-		shaders[selectedShader]->setFloat("fog.density", fogDensity);
+		shaders[3]->setVector("viewPos", cameras[selectedCamera]->getCameraPosition());
+		shaders[3]->setVector("fog.color", fogColor);
+		shaders[3]->setFloat("fog.density", fogDensity);
 		shaders[3]->setLighting(repository->dirLights, repository->pointLights, repository->spotLights);
 
 		// copy content of geometry's depth buffer to default framebuffer's depth buffer
