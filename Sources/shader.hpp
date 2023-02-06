@@ -16,10 +16,10 @@ public:
     virtual ~Shader() = default;
     virtual void use();
     // utility uniform functions
-    virtual void setFloat(const char* name, float value) const;
-    virtual void setInt(const char* name, int value) const;
-    virtual void setVector(const char* name, glm::vec3 vector) const;
-    virtual void setMatrix(const char* name, glm::mat4 matrix) const;
+    void setFloat(const char* name, float value) const;
+    void setInt(const char* name, int value) const;
+    void setVector(const char* name, glm::vec3 vector) const;
+    void setMatrix(const char* name, glm::mat4 matrix) const;
     virtual void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const = 0;
 protected:
     // constructor reads and builds the shader
@@ -40,11 +40,26 @@ public:
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
+class GeometryPassShader : public Shader
+{
+public:
+    GeometryPassShader(unsigned int gBuffer);
+    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
+    void use() override;
+private:
+    unsigned int gBuffer;
+};
+
 class PhongShader : public Shader
 {
 public:
-    PhongShader();
+    PhongShader(unsigned int gPosition, unsigned int gNormal, unsigned int gAlbedoSpec);
     void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
+    void use() override;
+private:
+    unsigned int gPosition;
+    unsigned int gNormal;
+    unsigned int gAlbedoSpec;
 };
 
 class SkyboxShader : public Shader

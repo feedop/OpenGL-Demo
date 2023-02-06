@@ -188,6 +188,8 @@
   <ItemGroup>
     <None Include="Shaders\gouraud.frag" />
     <None Include="Shaders\gouraud.vert" />
+    <None Include="Shaders\g_buffer.frag" />
+    <None Include="Shaders\g_buffer.vert" />
     <None Include="Shaders\phong.frag" />
     <None Include="Shaders\phong.vert" />
     <None Include="Shaders\skybox.frag" />

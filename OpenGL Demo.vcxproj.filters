@@ -163,5 +163,7 @@
     <None Include="Shaders\gouraud.frag" />
     <None Include="Shaders\skybox.vert" />
     <None Include="Shaders\skybox.frag" />
+    <None Include="Shaders\g_buffer.vert" />
+    <None Include="Shaders\g_buffer.frag" />
   </ItemGroup>
 </Project>

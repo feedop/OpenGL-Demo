@@ -117,9 +117,7 @@ void Shader::setMatrix(const char* name, glm::mat4 matrix) const
 SolidColorShader::SolidColorShader() : Shader("Shaders\\solidcolor.vert", "Shaders\\solidcolor.frag") {}
 
 void SolidColorShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
-{
-    
-}
+{}
 
 GouraudShader::GouraudShader() : Shader("Shaders\\gouraud.vert", "Shaders\\gouraud.frag") {}
 
@@ -167,10 +165,20 @@ void GouraudShader::setLighting(const std::vector<DirLight>& dirLights, const st
     setInt("spotLightCount", spotLights.size());
 }
 
-PhongShader::PhongShader() : Shader("Shaders\\phong.vert", "Shaders\\phong.frag") {}
+PhongShader::PhongShader(unsigned int gPosition, unsigned int gNormal, unsigned int gAlbedoSpec) : Shader("Shaders\\phong.vert", "Shaders\\phong.frag"),
+gPosition(gPosition), gNormal(gNormal), gAlbedoSpec(gAlbedoSpec) {}
 
 void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
 {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, gPosition);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, gNormal);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
+
+    setFloat("shininess", 32.0);
+
     // Directional lights
     for (int i = 0; i < dirLights.size(); i++)
     {
@@ -213,9 +221,26 @@ void PhongShader::setLighting(const std::vector<DirLight>& dirLights, const std:
     setInt("spotLightCount", spotLights.size());
 }
 
+void PhongShader::use()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Shader::use();
+}
+
 SkyboxShader::SkyboxShader() : Shader("Shaders\\skybox.vert", "Shaders\\skybox.frag") {}
 
 void SkyboxShader::setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const
-{
+{}
 
+GeometryPassShader::GeometryPassShader(unsigned int gBuffer) : Shader("Shaders\\g_buffer.vert", "Shaders\\g_buffer.frag"), gBuffer(gBuffer) {}
+
+void GeometryPassShader::setLighting(const std::vector<DirLight>&dirLights, const std::vector<PointLight>&pointLights, const std::vector<SpotLight>&spotLights) const
+{}
+
+void GeometryPassShader::use()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Shader::use();
 }

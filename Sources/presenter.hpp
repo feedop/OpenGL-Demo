@@ -25,6 +25,7 @@ public:
     void draw();
 private:
     Repository* repository;
+    unsigned int gBuffer = 0;
 
     std::shared_ptr<StaticCamera> staticCamera;
     std::shared_ptr<FollowingCamera> followingCamera;

@@ -14,7 +14,7 @@ Model::Model(const char* path)
 
 void Model::draw(const std::shared_ptr<Shader> shader) const
 {
-    shader->setMatrix("u_model", modelMatrix);
+    shader->setMatrix("modelMatrix", modelMatrix);
     shader->setFloat("material.shininess", 32.0);
 
 	for (Mesh mesh : meshes)

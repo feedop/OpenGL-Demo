@@ -116,6 +116,8 @@ int main(int, char**)
     // Set up texture loading
     stbi::flipVertically();
 
+    glEnable(GL_DEBUG_OUTPUT);
+
     // Set up models and light sources in the repository
     Repository repository;
 
@@ -189,8 +191,6 @@ int main(int, char**)
         glViewport(0, 0, display_w, display_h);
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
         presenter.draw();

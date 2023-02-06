@@ -61,7 +61,7 @@ uniform int dirLightCount;
 uniform int pointLightCount;
 uniform int spotLightCount;
 
-uniform mat4 u_model;
+uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
@@ -73,11 +73,11 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {    
     
-    gl_Position = projectionMatrix * viewMatrix * u_model * vec4(aPos, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);
     TexCoords = aTexCoords;
 
-    vec3 Normal = mat3(transpose(inverse(u_model))) * aNormal;
-    vec3 FragPos = vec3(u_model * vec4(aPos, 1.0));
+    vec3 Normal = mat3(transpose(inverse(modelMatrix))) * aNormal;
+    vec3 FragPos = vec3(modelMatrix * vec4(aPos, 1.0));
 
     // properties
     vec3 norm = normalize(Normal);
