@@ -27,11 +27,11 @@ public:
 
     glm::vec3 getPosition() const;
 private:
-    static constexpr float pitchAngle = 0.1f;
-    static constexpr float yawAngle = 0.1f;
-    static constexpr float rollAngle = 0.1f;
-    static constexpr float acceleration = 0.2f;
-    static constexpr float maxSpeed = 4;
+    static constexpr float pitchAngle = 0.02f;
+    static constexpr float yawAngle = 0.04f;
+    static constexpr float rollAngle = 0.04f;
+    static constexpr float acceleration = 0.1f;
+    static constexpr float maxSpeed = 6;
 
     static constexpr float scale = 0.012f;
 

@@ -25,38 +25,92 @@ void Controller::handleUserInput(GLFWwindow * window, int key, int scancode, int
 {
     Controller* controller = static_cast<Controller*>(glfwGetWindowUserPointer(window));
 
-    if (action == GLFW_PRESS || action == GLFW_REPEAT)
+    if (action == GLFW_PRESS)
     {
         switch (key)
         {
             // pitch
             case GLFW_KEY_W:
-                controller->repository->playerModel.diveDown();
+                controller->pressedKeys.W = true;
                 break;
             case GLFW_KEY_S:
-                controller->repository->playerModel.pullUp();
+                controller->pressedKeys.S = true;
                 break;
             // yaw
             case GLFW_KEY_A:
-                controller->repository->playerModel.turnLeft();
+                controller->pressedKeys.A = true;
                 break;
             case GLFW_KEY_D:
-                controller->repository->playerModel.turnRight();
+                controller->pressedKeys.D = true;
                 break;
             // velocity
             case GLFW_KEY_UP:
-                controller->repository->playerModel.increaseVelocity();
+                controller->pressedKeys.UP = true;
                 break;
             case GLFW_KEY_DOWN:
-                controller->repository->playerModel.decreaseVelocity();
+                controller->pressedKeys.DOWN = true;
                 break;
             // roll
             case GLFW_KEY_LEFT:
-                controller->repository->playerModel.rollLeft();
+                controller->pressedKeys.LEFT = true;;
                 break;
             case GLFW_KEY_RIGHT:
-                controller->repository->playerModel.rollRight();
+                controller->pressedKeys.RIGHT = true;
                 break;
         }
     }
+	else if (action == GLFW_RELEASE)
+	{
+		switch (key)
+		{
+			// pitch
+		case GLFW_KEY_W:
+			controller->pressedKeys.W = false;
+			break;
+		case GLFW_KEY_S:
+			controller->pressedKeys.S = false;
+			break;
+			// yaw
+		case GLFW_KEY_A:
+			controller->pressedKeys.A = false;
+			break;
+		case GLFW_KEY_D:
+			controller->pressedKeys.D = false;
+			break;
+			// velocity
+		case GLFW_KEY_UP:
+			controller->pressedKeys.UP = false;
+			break;
+		case GLFW_KEY_DOWN:
+			controller->pressedKeys.DOWN = false;
+			break;
+			// roll
+		case GLFW_KEY_LEFT:
+			controller->pressedKeys.LEFT = false;
+			break;
+		case GLFW_KEY_RIGHT:
+			controller->pressedKeys.RIGHT = false;
+			break;
+		}
+	}
+}
+
+void Controller::adjustParametersUsingInput()
+{
+    if (pressedKeys.W)
+        repository->playerModel.diveDown();
+    if (pressedKeys.S)
+        repository->playerModel.pullUp();
+    if (pressedKeys.A)
+        repository->playerModel.turnLeft();
+    if (pressedKeys.D)
+        repository->playerModel.turnRight();
+    if (pressedKeys.UP)
+        repository->playerModel.increaseVelocity();
+    if (pressedKeys.DOWN)
+        repository->playerModel.decreaseVelocity();
+    if (pressedKeys.LEFT)
+        repository->playerModel.rollLeft();
+    if (pressedKeys.RIGHT)
+        repository->playerModel.rollRight();
 }
