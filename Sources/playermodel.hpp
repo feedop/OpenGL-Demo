@@ -33,7 +33,7 @@ private:
     static constexpr float yawAngle = 0.04f;
     static constexpr float rollAngle = 0.04f;
     static constexpr float acceleration = 0.1f;
-    static constexpr float maxSpeed = 6;
+    static constexpr float maxSpeed = 8;
 
     static constexpr float scale = 0.012f;
 

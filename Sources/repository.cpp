@@ -14,7 +14,9 @@ Repository::Repository() :
 	{
 		"Models/venator2/source/RepublicVenator2.fbx",
 		"Models/venator2/source/RepublicVenator2.fbx",
-		"Models/lucrehulk/cis_cap_fedcoreship.obj"
+		"Models/lucrehulk/cis_cap_fedcoreship.obj",
+		"Models/acclamator/Acclamator.obj",
+		"Models/acclamator/Acclamator.obj"
 	},
 
 	aiModels
@@ -173,29 +175,60 @@ Repository::Repository() :
 		1.0f,
 		0.001f,
 		0.00001f
+	},
+
+	// Central acclamator
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.2f, 0.2f, 0.8f), vec3(0.2f, 0.2f, 0.8f)
+		},
+		vec3(-157, 367, 1023),
+			// attenuation
+			1.0f,
+			0.0005f,
+			0.000005f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.2f, 0.2f, 0.8f), vec3(0.2f, 0.2f, 0.8f)
+		},
+		vec3(-85, 485, 1023),
+			// attenuation
+			1.0f,
+			0.0005f,
+			0.000005f
+	},
+	// Right acclamator
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.2f, 0.2f, 0.8f), vec3(0.2f, 0.2f, 0.8f)
+		},
+		vec3(2440, 1900, -70),
+		// attenuation
+		1.0f,
+		0.0005f,
+		0.000005f
+	},
+	PointLight
+	{
+		{
+			vec3(0, 0, 0), vec3(0.2f, 0.2f, 0.8f), vec3(0.2f, 0.2f, 0.8f)
+		},
+		vec3(2560, 1900, -70),
+		// attenuation
+		1.0f,
+		0.0005f,
+		0.000005f
 	}
 	},
 
-
 	// Spotlights
 	spotLights
-{
-	//SpotLight
-	//{
-	//	{
-	//		vec3(0, 0, 0), vec3(0.3f, 0.3f, 1), vec3(0.3f, 0.3f, 1)
-	//		//vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0)
-	//	},
-	//	vec3(0, 0, -2.0f),
-	//	vec3(0, 0, 1.0f),
-	//// cut-off
-	//0.6f,
-	//0.3f,
-	//// attenuation
-	//1.0f,
-	//0.09f,
-	//0.032f
-	//}
+	{
+	
 	}
 #pragma endregion
 	{
@@ -234,7 +267,27 @@ void Repository::setUpModelInitialPositions()
 					glm::mat4(1.0f), glm::vec3(4000, 0, 0)),
 				glm::vec3(300, 300, 300)),
 			glm::pi<float>() * 0.5f, glm::vec3(0, 1, 0)),
-			glm::pi<float>() * 0.5f, glm::vec3(0, 0, -1))
+		glm::pi<float>() * 0.5f, glm::vec3(0, 0, -1))
+	);
+
+	staticModels[3].setModelMatrix(
+		glm::rotate(
+			glm::rotate(
+				glm::scale(
+					glm::translate(
+						glm::mat4(1.0f), glm::vec3(300, 0, 1000)),
+					glm::vec3(2, 2, 2)),
+			glm::radians(135.0f), glm::vec3(0, 0, -1)),
+		glm::pi<float>() * 0.5f, glm::vec3(-1, 0, 0))
+	);
+
+	staticModels[4].setModelMatrix(
+		glm::rotate(
+			glm::scale(
+				glm::translate(
+					glm::mat4(1.0f), glm::vec3(2500, 2500, -100)),
+				glm::vec3(2, 2, 2)),
+			glm::pi<float>() * 0.5f, glm::vec3(-1, 0, 0))
 	);
 
 	aiModels[0].setRotationMatrix(
