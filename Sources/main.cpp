@@ -6,12 +6,21 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+
 #include <stdio.h>
+#include <vector>
+
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
+#include <glad/glad.h>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
+
+#include "presenter.hpp"
+#include "controller.hpp"
+#include "textures/textureloading.hpp"
+
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -47,16 +56,16 @@ int main(int, char**)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 #else
-    // GL 3.0 + GLSL 130
-    const char* glsl_version = "#version 130";
+    // GL 3.3 + GLSL 330
+    const char* glsl_version = "#version 330";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(900, 900, "OpenGL Demo", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -90,25 +99,38 @@ int main(int, char**)
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     // Load Fonts
-    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-    // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-    // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-    // - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use Freetype for higher quality font rendering.
-    // - Read 'docs/FONTS.md' for more instructions and details.
-    // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-    //io.Fonts->AddFontDefault();
-    //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-    //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-    //IM_ASSERT(font != NULL);
+    io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
+
+    // Load glad
+    gladLoadGL();
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
+    bool show_demo_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    //ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
+    
+    // Additional OpenGL setup
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    // Set up texture loading
+    stbi::flipVertically();
+
+    glEnable(GL_DEBUG_OUTPUT);
+
+    // Set up models and light sources in the repository
+    Repository repository;
+
+    // Create a presenter - responsible for shaders, cameras, rendering
+    Presenter presenter(&repository);
+
+    // Create a controller - responsible for object movement and user input
+    Controller controller(&repository);
+
+    // Set up input processing
+    glfwSetWindowUserPointer(window, &controller);
+    glfwSetKeyCallback(window, Controller::handleUserInput);
+    
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -129,38 +151,46 @@ int main(int, char**)
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+
+		ImGui::Begin("Configuration window"); // Create a window and append into it.
+
+		ImGui::Text("Shader mode");
+
+		ImGui::RadioButton("Solid color", &presenter.selectedShader, 0); ImGui::SameLine();
+		ImGui::RadioButton("Gouraud interpolation", &presenter.selectedShader, 1); ImGui::SameLine();
+		ImGui::RadioButton("Phong interpolation", &presenter.selectedShader, 2);
+
+        ImGui::Text("Camera");
+
+        ImGui::RadioButton("Static camera", &presenter.selectedCamera, 0); ImGui::SameLine();
+        ImGui::RadioButton("Following camera", &presenter.selectedCamera, 1); ImGui::SameLine();
+        ImGui::RadioButton("Third person camera", &presenter.selectedCamera, 2);
+
+        if (presenter.selectedCamera == 2)
         {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
+            ImGui::Checkbox("Invert camera direction", &presenter.invertThirdPersonCamera);
         }
 
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
+        ImGui::Checkbox("Night (only ambient light)", &presenter.night);
+        ImGui::SliderFloat("Fog density", &presenter.fogDensity, 0.0f, 1.0f);
+        ImGui::ColorEdit3("Fog color", glm::value_ptr(presenter.fogColor));
+
+        ImGui::Checkbox("Turbulence", &controller.turbulence);
+        ImGui::SliderFloat("Vertical light rotation", &controller.verticalRotation, -45.0f, 45.0f);
+        ImGui::SliderFloat("Horizontal light rotation", &controller.horizontalRotation, -45.0f, 45.0f);
+
+        glm::vec3 playerPosition = controller.getPlayerPosition();
+        ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);
+
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+
+        // Adjust player movement based on input
+        controller.adjustParametersUsingInput();
+
+        // Move the player and dynamic objects
+        controller.moveAll();
 
         // Rendering
         ImGui::Render();
@@ -168,7 +198,11 @@ int main(int, char**)
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_CULL_FACE);
+
+        presenter.draw();
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     	
         // Update and Render additional Platform Windows
@@ -183,6 +217,9 @@ int main(int, char**)
         }
 
         glfwSwapBuffers(window);
+
+        // Clean transition between day and night
+        presenter.countFramesForNight();
     }
 
     // Cleanup

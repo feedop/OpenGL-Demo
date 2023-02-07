@@ -112,11 +112,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mt.lib;glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,16 +128,21 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mt.lib;glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\..\..\CUDA\Boids\src\glad.c" />
+    <ClCompile Include="Sources\aimodel.cpp" />
+    <ClCompile Include="Sources\camera.cpp" />
+    <ClCompile Include="Sources\controller.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_glfw.cpp" />
     <ClCompile Include="Sources\GUI\backend\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui.cpp" />
@@ -144,15 +150,50 @@
     <ClCompile Include="Sources\GUI\imgui\imgui_draw.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui_tables.cpp" />
     <ClCompile Include="Sources\GUI\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Sources\lightattachment.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\mesh.cpp" />
+    <ClCompile Include="Sources\model.cpp" />
+    <ClCompile Include="Sources\movablemodel.cpp" />
+    <ClCompile Include="Sources\playermodel.cpp" />
+    <ClCompile Include="Sources\repository.cpp" />
+    <ClCompile Include="Sources\textures\skybox.cpp" />
+    <ClCompile Include="Sources\textures\textureloading.cpp" />
+    <ClCompile Include="Sources\presenter.cpp" />
+    <ClCompile Include="Sources\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\aimodel.hpp" />
+    <ClInclude Include="Sources\camera.hpp" />
+    <ClInclude Include="Sources\controller.hpp" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_glfw.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3.h" />
     <ClInclude Include="Sources\GUI\backend\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Sources\GUI\imgui\imconfig.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui.h" />
     <ClInclude Include="Sources\GUI\imgui\imgui_internal.h" />
+    <ClInclude Include="Sources\light.hpp" />
+    <ClInclude Include="Sources\lightattachment.hpp" />
+    <ClInclude Include="Sources\mesh.hpp" />
+    <ClInclude Include="Sources\model.hpp" />
+    <ClInclude Include="Sources\movablemodel.hpp" />
+    <ClInclude Include="Sources\playermodel.hpp" />
+    <ClInclude Include="Sources\repository.hpp" />
+    <ClInclude Include="Sources\textures\skybox.hpp" />
+    <ClInclude Include="Sources\textures\stb_image.h" />
+    <ClInclude Include="Sources\textures\textureloading.hpp" />
+    <ClInclude Include="Sources\presenter.hpp" />
+    <ClInclude Include="Sources\shader.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\gouraud.frag" />
+    <None Include="Shaders\gouraud.vert" />
+    <None Include="Shaders\g_buffer.frag" />
+    <None Include="Shaders\g_buffer.vert" />
+    <None Include="Shaders\phong.frag" />
+    <None Include="Shaders\phong.vert" />
+    <None Include="Shaders\skybox.frag" />
+    <None Include="Shaders\skybox.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
