@@ -3,7 +3,7 @@
 AIModel::AIModel(const char* path) : MovableModel(path)
 {}
 
-void AIModel::move()
+void AIModel::move(float verticalRotation, float horizontalRotation)
 {
 	rotate(angularVelocity);
 	updateAttachedLights();

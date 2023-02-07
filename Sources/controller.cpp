@@ -20,7 +20,7 @@ void Controller::moveAll()
     }
 
     // Move the models
-	repository->playerModel.move();
+	repository->playerModel.move(verticalRotation, horizontalRotation);
 
 	for (AIModel& aiModel : repository->aiModels)
 	{

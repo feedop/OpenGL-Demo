@@ -6,7 +6,7 @@ class AIModel : public MovableModel
 {
 public:
     AIModel(const char* path);
-    void move() override;
+    void move(float verticalRotation = 0, float horizontalRotation = 0) override;
     void setParameters(float angularVelocity, glm::vec3 translation, glm::vec3 rotationAxis);
     void setRotationMatrix(glm::mat4 rotationMatrix);
     void rotateInitialCoordinateSystem(float angle);

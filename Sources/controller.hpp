@@ -9,6 +9,8 @@ class Controller
 {
 public:
 	bool turbulence = false;
+	float verticalRotation = 0.0f;
+	float horizontalRotation = 0.0f;
 
 	Controller(Repository* repository);
 	void moveAll();
@@ -19,7 +21,7 @@ public:
 private:
 	Repository* repository;
 	bool rolledLeft = false;
-	int turbulenceFrames = 0.0f;
+	int turbulenceFrames = 0;
 
 	struct PressedKeys
 	{

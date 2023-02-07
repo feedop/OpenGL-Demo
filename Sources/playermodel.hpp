@@ -13,7 +13,7 @@ public:
     void attachThirdPersonCamera(std::shared_ptr<ThirdPersonCamera> thirdPersonCamera);
     void attachFollowingCamera(std::shared_ptr<FollowingCamera> followingCamera);
 
-    void move() override;
+    void move(float verticalRotation = 0, float horizontalRotation = 0) override;
 
     void diveDown();
     void pullUp();

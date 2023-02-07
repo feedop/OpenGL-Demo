@@ -20,7 +20,7 @@ public:
     void setInt(const char* name, int value) const;
     void setVector(const char* name, glm::vec3 vector) const;
     void setMatrix(const char* name, glm::mat4 matrix) const;
-    virtual void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const = 0;
+    virtual void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const;
 protected:
     // constructor reads and builds the shader
     Shader(const char* vertexPath, const char* fragmentPath);
@@ -30,7 +30,6 @@ class SolidColorShader : public Shader
 {
 public:
     SolidColorShader();
-    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };
 
 class GouraudShader : public Shader
@@ -44,7 +43,6 @@ class GeometryPassShader : public Shader
 {
 public:
     GeometryPassShader(unsigned int gBuffer);
-    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
     void use() override;
 private:
     unsigned int gBuffer;
@@ -66,5 +64,4 @@ class SkyboxShader : public Shader
 {
 public:
     SkyboxShader();
-    void setLighting(const std::vector<DirLight>& dirLights, const std::vector<PointLight>& pointLights, const std::vector<SpotLight>& spotLights) const override;
 };

@@ -177,6 +177,8 @@ int main(int, char**)
         ImGui::ColorEdit3("Fog color", glm::value_ptr(presenter.fogColor));
 
         ImGui::Checkbox("Turbulence", &controller.turbulence);
+        ImGui::SliderFloat("Vertical light rotation", &controller.verticalRotation, -45.0f, 45.0f);
+        ImGui::SliderFloat("Horizontal light rotation", &controller.horizontalRotation, -45.0f, 45.0f);
 
         glm::vec3 playerPosition = controller.getPlayerPosition();
         ImGui::Text("Current player position: (%.3f, %.3f, %.3f)", playerPosition.x, playerPosition.y, playerPosition.z);

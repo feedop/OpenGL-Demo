@@ -484,7 +484,7 @@ void Repository::attachLights()
 
 	// Attach the lights
 
-	int i = spotLights.size() - 10;
+	int i = static_cast<int>(spotLights.size()) - 10;
 
 	playerModel.attachSpotLight(0, -30.0f, 0, &spotLights[i++]);
 	playerModel.attachSpotLight(0, 30.0f, 0, &spotLights[i++]);

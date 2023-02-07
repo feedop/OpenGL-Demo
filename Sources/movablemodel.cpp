@@ -17,7 +17,7 @@ void MovableModel::attachSpotLight(float relativeFront, float relativeRight, flo
     attachedSpotLights.emplace_back(std::make_shared<SpotLightAttachment>(relativeFront, relativeRight, relativeUp, spotLight, invertDirection));
 }
 
-void MovableModel::updateAttachedLights()
+void MovableModel::updateAttachedLights(float verticalRotation, float horizontalRotation)
 {
     for (auto& pointLight : attachedPointLights)
     {
@@ -29,7 +29,7 @@ void MovableModel::updateAttachedLights()
         if (pointLight->getInvertDirection())
             pointLight->updatePosition(position, front, right, up, -front);
         else
-            pointLight->updatePosition(position, front, right, up, front);
+            pointLight->updatePosition(position, front, right, up, front + verticalRotation / 45 * up + horizontalRotation /45 * right);
     }
 }
 

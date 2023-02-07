@@ -40,7 +40,7 @@ void PlayerModel::attachFollowingCamera(std::shared_ptr<FollowingCamera> followi
 	followingCamera->updateCamera(position);
 }
 
-void PlayerModel::move()
+void PlayerModel::move(float verticalRotation, float horizontalRotation)
 {
 	if (velocity == 0)
 		return;
@@ -49,7 +49,7 @@ void PlayerModel::move()
 	calculateModelMatrix();
 	followingCamera->updateCamera(position);
 	thirdPersonCamera->updateCamera(position, front, up);
-	updateAttachedLights();
+	updateAttachedLights(verticalRotation, horizontalRotation);
 }
 
 void PlayerModel::diveDown()

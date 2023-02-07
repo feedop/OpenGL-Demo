@@ -8,11 +8,11 @@
 class MovableModel : public Model
 {
 public:
-    virtual void move() = 0;
+    virtual void move(float verticalRotation = 0, float horizontalRotation = 0) = 0;
     void setPosition(glm::vec3 position);
     void attachPointLight(float relativeFront, float relativeRight, float relativeUp, PointLight* pointLight);
     void attachSpotLight(float relativeFront, float relativeRight, float relativeUp, SpotLight* spotLight, bool invertDirection = false);
-    void updateAttachedLights();
+    void updateAttachedLights(float verticalRotation = 0, float horizontalRotation = 0);
 
 protected:
     MovableModel(const char* path);
