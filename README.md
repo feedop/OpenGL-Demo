@@ -49,6 +49,8 @@ Three shading methods are implemented:
 https://user-images.githubusercontent.com/110346745/223720672-9105e3e1-61f8-4ba1-92de-bc7782d6da0f.mp4
 
 ## Credits ##
+Based on https://learnopengl.com/
+
 Models downloaded from:
  * Venator:
    https://downloadfree3d.com/3d-models/aircraft/spaceship/venator-class-star-destroyer/
